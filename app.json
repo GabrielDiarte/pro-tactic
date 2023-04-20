@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "pro-tactic-app",
+    "slug": "pro-tactic-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "pro-tactic-app"
+}
