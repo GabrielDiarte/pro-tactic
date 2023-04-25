@@ -1,0 +1,5 @@
+PRIORITARIO:
+-Navegacion 
+
+CHORRADAS: 
+-Validacion de datos en formulario (login y register)
