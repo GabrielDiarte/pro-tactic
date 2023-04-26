@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image } from 'react-native';
 
 import MenuInferior from './menuAbajo';
 
@@ -8,12 +8,13 @@ function MenuSuperior() {
         <View style={styles.contenedor}>
             <View style={styles.menuSuperior}>
                 <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
+                <Text style={styles.textoMenuSuperior}>PRO-TACTIC</Text>
                 <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
             </View>
             <View style={styles.lineaSuperior}></View>
-            <View style={styles.contenedorMenuInferior}>
+            {/* <View style={styles.contenedorMenuInferior}>
                 <MenuInferior />
-            </View>
+            </View> */}
         </View>
     );
 }
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 10,
         marginRight: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     contenedorMenuInferior: {
         position: 'absolute',
@@ -47,6 +48,16 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
     },
+    textoMenuSuperior: {
+        height: 40,
+        marginTop: 28,
+        marginLeft: 10,
+        marginRight: 10,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+    },
+
 });
 
 export default MenuSuperior;

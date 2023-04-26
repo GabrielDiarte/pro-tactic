@@ -4,6 +4,7 @@ import App from './App';
 import createAccount from './createAccount';
 import MenuAbajo from './menuAbajo';
 import MenuSuperior from './menuSuperior';
+import TrainingList from './trainingList';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
@@ -12,6 +13,7 @@ import MenuSuperior from './menuSuperior';
 
 //registerRootComponent(App);
 //registerRootComponent(createAccount);
-registerRootComponent(MenuAbajo);
+//registerRootComponent(MenuAbajo);
 //registerRootComponent(MenuSuperior);
+registerRootComponent(TrainingList);
 
