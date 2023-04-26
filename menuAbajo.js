@@ -3,18 +3,18 @@ import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 function MenuInferior() {
     return (
-        <View style={styles.contenedor}>
-            <View style={styles.linea}></View>
-            <View style={styles.menu}>
+        <View style={styles.contenedorMenuInferior}>
+            <View style={styles.lineaInferior}></View>
+            <View style={styles.menuInferior}>
                 <View style={styles.barraAmarilla}></View>
-                <TouchableOpacity style={styles.apartado}>
-                    <Image source={require('./logos/lupa.png')} style={styles.imagen} />
+                <TouchableOpacity style={styles.botonMenuInferior}>
+                    <Image source={require('./logos/lupa.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.apartado}>
-                    <Image source={require('./logos/casa.png')} style={styles.imagen} />
+                <TouchableOpacity style={styles.botonMenuInferior}>
+                    <Image source={require('./logos/casa.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.apartado}>
-                    <Image source={require('./logos/usuario.png')} style={styles.imagen} />
+                <TouchableOpacity style={styles.botonMenuInferior}>
+                    <Image source={require('./logos/usuario.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -22,10 +22,13 @@ function MenuInferior() {
 }
 
 const styles = StyleSheet.create({
-    contenedor: {
-        flex: 1,
+    contenedorMenuInferior: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
     },
-    linea: {
+    lineaInferior: {
         height: 10,
         position: 'absolute',
         bottom: 80,
@@ -33,24 +36,23 @@ const styles = StyleSheet.create({
         right: 0,
         backgroundColor: '#FAC710'
     },
-    menu: {
+    menuInferior: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         backgroundColor: '#000000',
         height: 80,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
     },
-    apartado: {
+    botonMenuInferior: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    imagen: {
+    imagenBotonMenuInferior: {
         width: 30,
         height: 30,
         marginBottom: 20,

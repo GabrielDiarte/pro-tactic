@@ -5,43 +5,47 @@ import MenuInferior from './menuAbajo';
 
 function MenuSuperior() {
     return (
-
-        <View>
-            <View style={styles.menu}>
-                <Image source={require('./logos/tres-puntos.png')} style={styles.imagen} />
-                <Image source={require('./logos/usuario.png')} style={styles.imagen} />
+        <View style={styles.contenedor}>
+            <View style={styles.menuSuperior}>
+                <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
+                <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
             </View>
-            <View style={styles.linea}></View>
-        
-            
-            
+            <View style={styles.lineaSuperior}></View>
+            <View style={styles.contenedorMenuInferior}>
+                <MenuInferior />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    menu: {
+    contenedor: {
+        flex: 1,
+    },
+    menuSuperior: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         backgroundColor: '#000000',
-        height: 100,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         paddingTop: 20,
     },
-    linea: {
+    lineaSuperior: {
         height: 10,
-        left: 0,
-        right: 0,
         backgroundColor: '#FAC710'
     },
-    imagen: {
+    imagenMenuSuperior: {
         width: 40,
         height: 40,
         marginTop: 20,
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10
+    },
+    contenedorMenuInferior: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
     },
 });
 
