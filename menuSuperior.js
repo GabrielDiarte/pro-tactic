@@ -21,7 +21,7 @@ function MenuSuperior() {
 
 const styles = StyleSheet.create({
     contenedor: {
-        flex: 1,
+        flex: 0,
     },
     menuSuperior: {
         flexDirection: 'row',

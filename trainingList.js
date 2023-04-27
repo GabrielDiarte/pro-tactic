@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 import MenuSuperior from './menuSuperior';
+import MenuInferior from './menuAbajo';
+
 
 function TrainingList() {
     const entrenamientos = [
@@ -24,6 +26,25 @@ function TrainingList() {
             nombre: 'Ejercicio 3',
             descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 3.',
         },
+        {
+            id: 4,
+            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+            nombre: 'Ejercicio 4',
+            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 4.',
+        },
+        {
+            id: 5,
+            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+            nombre: 'Ejercicio 5',
+            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 5.',
+        },
+        {
+            id: 6,
+            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+            nombre: 'Ejercicio 6',
+            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 6.',
+        },
+
     ];
 
     const handleVerMas = (id) => {
@@ -31,44 +52,58 @@ function TrainingList() {
     };
 
     return (
-        <View style={styles.contenedor}>
+        <View style={styles.containerGeneral}>
+            <MenuSuperior />
+            <View style={styles.contenedor}>
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Cambiar filtros</Text>
                 </TouchableOpacity>
-                {entrenamientos.map((entrenamiento) => (
-                    <View style={styles.tarjeta}>
-                        <View key={entrenamiento.id}  style={styles.infoConFoto}>
-                            <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
-                            <View style={styles.infoTarjeta}>
-                                <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
-                                <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
-                                <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(entrenamiento.id)}>
-                                    <Text style={styles.buttonVerMasText}>Ver más</Text>
-                                </TouchableOpacity>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {entrenamientos.map((entrenamiento) => (
+                        <View style={styles.tarjeta}>
+                            <View key={entrenamiento.id} style={styles.infoConFoto}>
+                                <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
+                                <View style={styles.infoTarjeta}>
+                                    <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
+                                    <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(entrenamiento.id)}>
+                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                ))}
-
+                    ))}
+                </ScrollView>
+            </View>
+    
+        <MenuInferior />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    contenedor: {
-        flex: 0,
-        width: '95%',
-        marginTop: 70,
+    containerGeneral: {
+        flex: 1,
+        width: '100%',
         alignSelf: 'center',
+        // backgroundColor: 'red'
+    },
+    contenedor: {
+        flex: 1,
+        width: '95%',
+        marginVertical: 10,
+        alignSelf: 'center',
+        // backgroundColor: 'aquamarine'
+        marginBottom: 85
     },
     tarjeta: {
         marginBottom: 10,
-        height: '25%',
+        height: 170,
         borderRadius: 8,
         backgroundColor: 'black'
     },
     infoConFoto: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         marginHorizontal: '3%',
         marginVertical: '4%',
         width: '94%',
@@ -92,7 +127,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 16
-        // Falta centrar el texto verticalmente
     },
     _descripcion: {
         width: '95%',
@@ -113,7 +147,7 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: '#FAC710',
         borderRadius: 5,
-        marginBottom: 20,
+        marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -133,7 +167,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: '5,5%',
-        
+
     },
     buttonVerMasText: {
         fontSize: 15,
