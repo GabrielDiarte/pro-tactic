@@ -3,6 +3,7 @@ import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 function MenuInferior() {
     return (
+
         <View style={styles.contenedorMenuInferior}>
             <View style={styles.lineaInferior}></View>
             <View style={styles.menuInferior}>
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
         right: 0,
     },
     lineaInferior: {
-        height: 10,
+        height: 6,
         position: 'absolute',
         bottom: 80,
         left: 0,

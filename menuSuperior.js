@@ -1,27 +1,51 @@
-import React from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 
+import MenuLateral from './components/menuLateral';
 import MenuInferior from './menuAbajo';
+import TrainingList from './trainingList';
 
 function MenuSuperior() {
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    // Esto hay que mirarlo bien, ya que esta el contenido metido dentro del menu superior, de formar que el overlay del menu lateral sirva para todos
+
     return (
         <View style={styles.contenedor}>
             <View style={styles.menuSuperior}>
-                <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
+                <TouchableOpacity onPress={() => setMenuVisible(true)}>
+                    <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
+                </TouchableOpacity>
                 <Text style={styles.textoMenuSuperior}>PRO-TACTIC</Text>
                 <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
             </View>
             <View style={styles.lineaSuperior}></View>
-            {/* <View style={styles.contenedorMenuInferior}>
-                <MenuInferior />
-            </View> */}
+
+            <View style={styles.contenido}>
+                <TrainingList></TrainingList>
+            </View>
+
+            {/* En caso de que menuInvisible se encuentre en true, se ""generará"" el menu lateral */}
+            {menuVisible && (
+                <TouchableOpacity style={styles.overlay} onPress={() => setMenuVisible(false)}>
+                    <MenuLateral style={styles.menuLateral} />
+                </TouchableOpacity>
+            )}
+
+            
+                <MenuInferior></MenuInferior>
+            
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     contenedor: {
-        flex: 0,
+        flex: 1,
+        position: 'relative',
+    },
+    contenido: {
+        flex: 1,
     },
     menuSuperior: {
         flexDirection: 'row',
@@ -31,8 +55,8 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     lineaSuperior: {
-        height: 10,
-        backgroundColor: '#FAC710'
+        height: 6,
+        backgroundColor: '#FAC710',
     },
     imagenMenuSuperior: {
         width: 40,
@@ -42,11 +66,22 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginBottom: 10,
     },
-    contenedorMenuInferior: {
+    overlay: {
         position: 'absolute',
-        bottom: 0,
+        top: 0,
         left: 0,
         right: 0,
+        bottom: 0,
+        zIndex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // 40% de opacidad
+    },
+    menuLateral: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        width: '70%',
+        backgroundColor: '#000000',
     },
     textoMenuSuperior: {
         height: 40,
@@ -57,7 +92,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FFFFFF',
     },
-
 });
 
 export default MenuSuperior;

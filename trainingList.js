@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-import MenuSuperior from './menuSuperior';
-import MenuInferior from './menuAbajo';
 
 
 function TrainingList() {
@@ -53,7 +51,7 @@ function TrainingList() {
 
     return (
         <View style={styles.containerGeneral}>
-            <MenuSuperior />
+             {/* <MenuSuperior /> */}
             <View style={styles.contenedor}>
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Cambiar filtros</Text>
@@ -76,7 +74,7 @@ function TrainingList() {
                 </ScrollView>
             </View>
     
-        <MenuInferior />
+        {/* <MenuInferior /> */}
         </View>
     );
 }
@@ -86,14 +84,14 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignSelf: 'center',
-        // backgroundColor: 'red'
+        //backgroundColor: 'red'
     },
     contenedor: {
         flex: 1,
         width: '95%',
         marginVertical: 10,
         alignSelf: 'center',
-        // backgroundColor: 'aquamarine'
+        //backgroundColor: 'aquamarine',
         marginBottom: 85
     },
     tarjeta: {
