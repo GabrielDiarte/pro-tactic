@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         height: '55%',
         textAlign: 'auto',
-        marginTop: '2,5%',
+        marginTop: '2%',
         color: 'white',
     },
     get descripcion() {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '5,5%',
+        marginTop: '5%',
 
     },
     buttonVerMasText: {

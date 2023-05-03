@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     },
     lineaSeparadora: {
         height: 50,
+        marginTop: 5,
         backgroundColor: '#FAC710'
     },
 });
