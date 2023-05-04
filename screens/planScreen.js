@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const planScreen = () => {
+
+
+    const [selected, setSelected] = useState('');
+
+    const submit = (plan) => {
+        setSelected(plan)
+        
+    };
+
+    const valorNormal = {
+        width: '100%',
+        flexDirection: 'row',
+    };
+
+    const valorSeleccionado = {
+        width: '100%',
+        flexDirection: 'row',
+        borderWidth: 4,
+        borderRadius: 10,
+        borderColor: 'white',
+        padding: 5
+    };
+
+
     return (
         <View style={styles.containerGeneral}>
             <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
@@ -10,8 +34,8 @@ const planScreen = () => {
 
             <View style={styles.container}>
                 <View style={styles.planes}>
-                    <View style={styles.planesTarjeta}>
-                        <View style={styles.cabecera}>
+                    <TouchableOpacity style={styles.planesTarjeta } onPress = {() => submit('basico')}>
+                        <View style={selected === 'basico' ? valorSeleccionado : valorNormal } >
                             <Text style={styles.titulo}>Plan Básico</Text>
                             <Text style={styles.precio}>Gratis</Text>
                         </View>
@@ -21,9 +45,10 @@ const planScreen = () => {
                                 Además, podrán seguir a otros usuarios y ver sus actividades.
                             </Text>
                         </View>
-                    </View>
-                    <View style={styles.planesTarjeta}>
-                        <View style={styles.cabecera}>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.planesTarjeta } onPress = {() => submit('medium')}>
+                        <View style={selected === 'medium' ? valorSeleccionado : valorNormal }>
                             <Text style={styles.titulo}>Plan Medium</Text>
                             <Text style={styles.precio}>3.99€</Text>
                         </View>
@@ -34,9 +59,9 @@ const planScreen = () => {
                                 la publicidad.
                             </Text>
                         </View>
-                    </View>
-                    <View style={styles.planesTarjeta}>
-                        <View style={styles.cabecera}>
+                    </TouchableOpacity>
+                    <TouchableOpacity  style={styles.planesTarjeta } onPress = {() => submit('pro')}>
+                        <View style={selected === 'pro' ? valorSeleccionado : valorNormal }>
                             <Text style={styles.titulo}>Plan Pro</Text>
                             <Text style={styles.precio}>6.99€</Text>
                         </View>
@@ -47,7 +72,7 @@ const planScreen = () => {
                                 Además, permite crear ejercicios para aportar más información a la app.
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.botones}>
                 <TouchableOpacity style={styles.button} >
@@ -73,7 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'black',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     container: {
         flex: 1,
@@ -85,39 +110,36 @@ const styles = StyleSheet.create({
     planes: {
         width: '100%',
         height: '90%',
-        //backgroundColor: 'grey',
     },
     planesTarjeta: {
         width: '100%',
         height: '33%',
-        //backgroundColor: 'blue',
     },
     cabecera: {
         width: '100%',
-        //backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center'
     },
+   
     titulo: {
         textAlign: 'left',
         color: '#FAC710',
-        // backgroundColor: 'black',
+        //  backgroundColor: 'green',
         fontSize: 30,
         fontWeight: 'bold',
         width: '65%',
     },
     precio: {
         color: 'white',
-        //backgroundColor: 'grey',
+        // backgroundColor: 'grey',
         fontSize: 30,
         fontWeight: 'bold',
-        width: '30%',
-        marginLeft: '5%'
+        width: '35%',
+        textAlign: 'right'
     },
     descripcionPlan: {
         flex: 1,
-        marginRight: '3%',
-        marginVertical: '3%',
+        marginBottom: '3%',
         //backgroundColor: 'red'
     },
     descripcionPlanText: {
