@@ -9,6 +9,8 @@ import MenuLateral from './components/menuLateral';
 import profileScreen from './screens/profileScreen';
 import { AppRegistry } from 'react-native';
 import planScreen from './screens/planScreen';
+import userList from './components/userList';
+import userListScreen from './screens/userListScreen';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
@@ -21,4 +23,6 @@ import planScreen from './screens/planScreen';
 //registerRootComponent(TrainingList);
 //registerRootComponent(MenuLateral);
 //registerRootComponent(profileScreen);
-registerRootComponent(planScreen);
+//registerRootComponent(planScreen);
+//registerRootComponent(userList)
+registerRootComponent(userListScreen)

@@ -8,6 +8,7 @@ const planScreen = () => {
 
     const submit = (plan) => {
         setSelected(plan)
+        console.log("Has elegido el plan " + plan)
         
     };
 
@@ -22,13 +23,13 @@ const planScreen = () => {
         borderWidth: 4,
         borderRadius: 10,
         borderColor: 'white',
-        padding: 5
+        marginBottom: 2
     };
 
 
     return (
         <View style={styles.containerGeneral}>
-            <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
+            <TouchableOpacity style={styles.backArrow}>
                 <Image source={require('../logos/backArrow.png')} style={styles.backArrow} />
             </TouchableOpacity>
 
