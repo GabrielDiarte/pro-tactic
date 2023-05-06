@@ -93,7 +93,6 @@ const CreateAccountScreen = ({ onRegister }) => {
     image: {
       height: 200,
       width: '120%',
-      //marginTop: 32,
       marginBottom: 15
     },
     title: {
@@ -125,7 +124,6 @@ const CreateAccountScreen = ({ onRegister }) => {
       height: 50,
       backgroundColor: '#FAC710',
       borderRadius: 5,
-      //marginTop: 30,
       marginBottom: 20,
       alignItems: 'center',
       justifyContent: 'center',

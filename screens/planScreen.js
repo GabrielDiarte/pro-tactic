@@ -22,7 +22,9 @@ const planScreen = () => {
         flexDirection: 'row',
         borderWidth: 4,
         borderRadius: 10,
-        borderColor: 'white',
+        backgroundColor: '#444444',
+        paddingHorizontal: 2,
+        borderColor: '#444444',
         marginBottom: 2
     };
 
