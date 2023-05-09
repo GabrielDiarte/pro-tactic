@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 
-import MenuLateral from './components/menuLateral';
-import MenuInferior from './menuAbajo';
-import TrainingList from './trainingList';
+import MenuLateral from '../components/menuLateral';
+import MenuInferior from '../menuAbajo';
+import exerciseBigCard from '../components/exerciseBigCard';
+import ExerciseBigCard from '../components/exerciseBigCard';
 
-function MenuSuperior() {
+function BigCardScreen() {
     const [menuVisible, setMenuVisible] = useState(false);
 
     // Esto hay que mirarlo bien, ya que esta el contenido metido dentro del menu superior, de formar que el overlay del menu lateral sirva para todos
@@ -14,16 +15,16 @@ function MenuSuperior() {
         <View style={styles.contenedor}>
             <View style={styles.menuSuperior}>
                 <TouchableOpacity onPress={() => setMenuVisible(true)}>
-                    <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
+                    <Image source={require('../logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
                 </TouchableOpacity>
                 <Text style={styles.textoMenuSuperior}>PRO-TACTIC</Text>
-                <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
+                <Image source={require('../logos/usuario.png')} style={styles.imagenMenuSuperior} />
             </View>
             <View style={styles.lineaSuperior}></View>
 
-            {/* <View style={styles.contenido}>
-                <TrainingList></TrainingList>
-            </View> */}
+            <View style={styles.contenido}>
+                <ExerciseBigCard></ExerciseBigCard>
+            </View>
 
             {/* En caso de que menuInvisible se encuentre en true, se ""generará"" el menu lateral */}
             {menuVisible && (
@@ -33,7 +34,7 @@ function MenuSuperior() {
             )}
 
             
-                {/* <MenuInferior></MenuInferior> */}
+                <MenuInferior></MenuInferior>
             
         </View>
     );
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     },
     lineaSuperior: {
         height: 6,
+        marginBottom: 10,
         backgroundColor: '#FAC710',
     },
     imagenMenuSuperior: {
@@ -94,4 +96,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MenuSuperior;
+export default BigCardScreen;
