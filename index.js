@@ -11,6 +11,8 @@ import { AppRegistry } from 'react-native';
 import planScreen from './screens/planScreen';
 import userList from './components/userList';
 import userListScreen from './screens/userListScreen';
+import exerciseBigCard from './components/exerciseBigCard';
+import BigCardScreen from './screens/bigCardScreen';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
@@ -25,4 +27,6 @@ import userListScreen from './screens/userListScreen';
 //registerRootComponent(profileScreen);
 //registerRootComponent(planScreen);
 //registerRootComponent(userList)
-registerRootComponent(userListScreen)
+//registerRootComponent(userListScreen)
+//registerRootComponent(exerciseBigCard)
+registerRootComponent(BigCardScreen)
