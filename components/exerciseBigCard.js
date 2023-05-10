@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     foto: {
         height: 230,
         width: '100%',
+        borderRadius: 15
     },
     descripcionContainer: {
         flex: 1,

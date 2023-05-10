@@ -13,6 +13,9 @@ import userList from './components/userList';
 import userListScreen from './screens/userListScreen';
 import exerciseBigCard from './components/exerciseBigCard';
 import BigCardScreen from './screens/bigCardScreen';
+import SliderComponent from './components/slider';
+import SliderComponentScreen from './components/slider';
+import sliderScreen from './screens/sliderScreen';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
@@ -29,4 +32,6 @@ import BigCardScreen from './screens/bigCardScreen';
 //registerRootComponent(userList)
 //registerRootComponent(userListScreen)
 //registerRootComponent(exerciseBigCard)
-registerRootComponent(BigCardScreen)
+//registerRootComponent(BigCardScreen)
+//registerRootComponent(sliderComponent)
+registerRootComponent(sliderScreen)

@@ -12,10 +12,10 @@ const firebaseConfig = {
   projectId: "pro-tactic",
   storageBucket: "pro-tactic.appspot.com",
   messagingSenderId: "598141223380",
-  appId: "1:598141223380:web:8af3822755edde28a31641",
-  measurementId: "G-M25SX3KWB1"
+  appId: "1:598141223380:web:e14d3f10837d6408a31641",
+  measurementId: "G-V1RJ268FY5"
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
-getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

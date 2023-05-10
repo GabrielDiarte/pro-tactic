@@ -1,84 +1,118 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
+import firebase from 'firebase/app';
+import 'firebase/database';
 
+
+const entrenamientos = [
+    {
+        id: 1,
+        // imagen: './fotos/futbol/posesion.jpg',
+        imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAbIQ6kkqfA5HSWcTYIQGNTnwHMSYH6_jWW4XOHkfNSWDTWlJLYQsq2X4GKjUg8yvXtM&usqp=CAU',
+        nombre: 'Ejercicio 1',
+        descripcion: 'Una breve descripción del ejercicio 1.Una breve descripción del ejercicio 1.',
+    },
+    {
+        id: 2,
+        imagen: 'https://www.fiebrefutbol.es/wp-content/uploads/2012/08/2.jpg',
+        nombre: 'Ejercicio 2',
+        descripcion: 'Una breve descripción del ejercicio 2.Una breve descripción del ejercicio 2.',
+    },
+    {
+        id: 3,
+        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+        nombre: 'Ejercicio 3',
+        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 3.',
+    },
+    {
+        id: 4,
+        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+        nombre: 'Ejercicio 4',
+        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 4.',
+    },
+    {
+        id: 5,
+        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+        nombre: 'Ejercicio 5',
+        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 5.',
+    },
+    {
+        id: 6,
+        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
+        nombre: 'Ejercicio 6',
+        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 6.',
+    },
+
+];
 
 function TrainingList() {
-    const entrenamientos = [
-        {
-            id: 1,
-            // imagen: './fotos/futbol/posesion.jpg',
-            imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAbIQ6kkqfA5HSWcTYIQGNTnwHMSYH6_jWW4XOHkfNSWDTWlJLYQsq2X4GKjUg8yvXtM&usqp=CAU',
-            nombre: 'Ejercicio 1',
-            descripcion: 'Una breve descripción del ejercicio 1.Una breve descripción del ejercicio 1.',
-        },
-        {
-            id: 2,
-            imagen: 'https://www.fiebrefutbol.es/wp-content/uploads/2012/08/2.jpg',
-            nombre: 'Ejercicio 2',
-            descripcion: 'Una breve descripción del ejercicio 2.Una breve descripción del ejercicio 2.',
-        },
-        {
-            id: 3,
-            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-            nombre: 'Ejercicio 3',
-            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 3.',
-        },
-        {
-            id: 4,
-            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-            nombre: 'Ejercicio 4',
-            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 4.',
-        },
-        {
-            id: 5,
-            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-            nombre: 'Ejercicio 5',
-            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 5.',
-        },
-        {
-            id: 6,
-            imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-            nombre: 'Ejercicio 6',
-            descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 6.',
-        },
+    const [ejercicios, setEjercicios] = useState([]);
 
-    ];
+    // // var firebase = require('firebase/app');
+    // require("firebase/auth");
+    // // require("firebase/firestore");
 
-    const handleVerMas = (id) => {
-        console.log(`Ver más sobre el ejercicio ${id}`);
-    };
+    // const ref = firebase.firestore().doc('ejercicio/g0xhTSsa5dRgwMAOpXew');
+    // ref.onSnapshot((doc) => {
+    //     const data = doc.data();
+    //     console.log(data)
+    //     // ...
+    // });
 
-    return (
-        <View style={styles.containerGeneral}>
-             {/* <MenuSuperior /> */}
-            <View style={styles.contenedor}>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Cambiar filtros</Text>
-                </TouchableOpacity>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    {entrenamientos.map((entrenamiento) => (
-                        <View style={styles.tarjeta}>
-                            <View key={entrenamiento.id} style={styles.infoConFoto}>
-                                <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
-                                <View style={styles.infoTarjeta}>
-                                    <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
-                                    <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
-                                    <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(entrenamiento.id)}>
-                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
-                                    </TouchableOpacity>
-                                </View>
+//     return (
+//         <View style={styles.container}>
+//             <ScrollView showsVerticalScrollIndicator={false}>
+//                 {ejercicios.map((ejercicio) => (
+//                     <View style={styles.tarjeta} key={ejercicio.id}>
+//                         <Image source={{ uri: ejercicio.imagen }} style={styles.foto} />
+//                         <View style={styles.infoTarjeta}>
+//                             <Text style={styles.nombre}>{ejercicio.nombre}</Text>
+//                             <Text style={styles.descripcion}>{ejercicio.descripcion}</Text>
+//                             <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(ejercicio.id)}>
+//                                 <Text style={styles.buttonVerMasText}>Ver más</Text>
+//                             </TouchableOpacity>
+//                         </View>
+//                     </View>
+//                 ))}
+//             </ScrollView>
+//         </View>
+//     );
+// }
+
+
+return (
+    <View style={styles.containerGeneral}>
+         {/* <MenuSuperior /> */}
+        <View style={styles.contenedor}>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Cambiar filtros</Text>
+            </TouchableOpacity>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {entrenamientos.map((entrenamiento) => (
+                    <View style={styles.tarjeta}>
+                        <View key={entrenamiento.id} style={styles.infoConFoto}>
+                            <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
+                            <View style={styles.infoTarjeta}>
+                                <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
+                                <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
+                                <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(entrenamiento.id)}>
+                                    <Text style={styles.buttonVerMasText}>Ver más</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                    ))}
-                </ScrollView>
-            </View>
-    
-        {/* <MenuInferior /> */}
-        </View>
-    );
-}
+                    </View>
 
+                ))}
+                 {/* <Text data={data}></Text> */}
+            </ScrollView>
+        </View>
+
+    {/* <MenuInferior /> */}
+    </View>
+);
+
+}
 const styles = StyleSheet.create({
     containerGeneral: {
         flex: 1,
