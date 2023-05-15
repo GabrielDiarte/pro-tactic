@@ -4,11 +4,12 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import firebase from 'firebase/app';
 import 'firebase/database';
 
+import { useNavigation } from '@react-navigation/native';
+
 
 const entrenamientos = [
     {
         id: 1,
-        // imagen: './fotos/futbol/posesion.jpg',
         imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAbIQ6kkqfA5HSWcTYIQGNTnwHMSYH6_jWW4XOHkfNSWDTWlJLYQsq2X4GKjUg8yvXtM&usqp=CAU',
         nombre: 'Ejercicio 1',
         descripcion: 'Una breve descripción del ejercicio 1.Una breve descripción del ejercicio 1.',
@@ -47,45 +48,13 @@ const entrenamientos = [
 ];
 
 function TrainingList() {
+    const navigation = useNavigation();
     const [ejercicios, setEjercicios] = useState([]);
-
-    // // var firebase = require('firebase/app');
-    // require("firebase/auth");
-    // // require("firebase/firestore");
-
-    // const ref = firebase.firestore().doc('ejercicio/g0xhTSsa5dRgwMAOpXew');
-    // ref.onSnapshot((doc) => {
-    //     const data = doc.data();
-    //     console.log(data)
-    //     // ...
-    // });
-
-//     return (
-//         <View style={styles.container}>
-//             <ScrollView showsVerticalScrollIndicator={false}>
-//                 {ejercicios.map((ejercicio) => (
-//                     <View style={styles.tarjeta} key={ejercicio.id}>
-//                         <Image source={{ uri: ejercicio.imagen }} style={styles.foto} />
-//                         <View style={styles.infoTarjeta}>
-//                             <Text style={styles.nombre}>{ejercicio.nombre}</Text>
-//                             <Text style={styles.descripcion}>{ejercicio.descripcion}</Text>
-//                             <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(ejercicio.id)}>
-//                                 <Text style={styles.buttonVerMasText}>Ver más</Text>
-//                             </TouchableOpacity>
-//                         </View>
-//                     </View>
-//                 ))}
-//             </ScrollView>
-//         </View>
-//     );
-// }
-
 
 return (
     <View style={styles.containerGeneral}>
-         {/* <MenuSuperior /> */}
         <View style={styles.contenedor}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('FilterScreen')}}>
                 <Text style={styles.buttonText}>Cambiar filtros</Text>
             </TouchableOpacity>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -96,7 +65,9 @@ return (
                             <View style={styles.infoTarjeta}>
                                 <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
                                 <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
-                                <TouchableOpacity style={styles.buttonVerMas} onPress={() => handleVerMas(entrenamiento.id)}>
+                                <TouchableOpacity style={styles.buttonVerMas} 
+                                // onPress={() => handleVerMas(entrenamiento.id)}
+                                onPress={() => { navigation.navigate('BigCardScreen')}}>
                                     <Text style={styles.buttonVerMasText}>Ver más</Text>
                                 </TouchableOpacity>
                             </View>
@@ -104,11 +75,9 @@ return (
                     </View>
 
                 ))}
-                 {/* <Text data={data}></Text> */}
             </ScrollView>
         </View>
 
-    {/* <MenuInferior /> */}
     </View>
 );
 

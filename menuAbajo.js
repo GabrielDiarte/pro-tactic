@@ -1,20 +1,25 @@
 import React from 'react';
 import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
+
 function MenuInferior() {
+    const navigation = useNavigation();
+    
     return (
 
         <View style={styles.contenedorMenuInferior}>
             <View style={styles.lineaInferior}></View>
             <View style={styles.menuInferior}>
                 <View style={styles.barraAmarilla}></View>
-                <TouchableOpacity style={styles.botonMenuInferior}>
+                <TouchableOpacity style={styles.botonMenuInferior} onPress={() => { navigation.navigate('FilterScreen')}}>
                     <Image source={require('./logos/lupa.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuInferior}>
+                <TouchableOpacity style={styles.botonMenuInferior} onPress={() => { navigation.navigate('SliderScreen')}}>
                     <Image source={require('./logos/casa.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuInferior}>
+                <TouchableOpacity style={styles.botonMenuInferior} onPress={() => { navigation.navigate('UserListScreen')}}>
                     <Image source={require('./logos/usuario.png')} style={styles.imagenBotonMenuInferior} />
                 </TouchableOpacity>
             </View>

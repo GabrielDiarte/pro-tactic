@@ -3,9 +3,11 @@ import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 
 import MenuLateral from '../components/menuLateral';
 import MenuInferior from '../menuAbajo';
-import UserList from '../components/userList';
+import FilterComponent from '../components/filter';
+import { useNavigation } from '@react-navigation/native';
 
-function UserListScreen() {
+function FilterScreen() {
+    const navigation = useNavigation();
     const [menuVisible, setMenuVisible] = useState(false);
 
     // Esto hay que mirarlo bien, ya que esta el contenido metido dentro del menu superior, de formar que el overlay del menu lateral sirva para todos
@@ -22,7 +24,7 @@ function UserListScreen() {
             <View style={styles.lineaSuperior}></View>
 
             <View style={styles.contenido}>
-                <UserList></UserList>
+                <FilterComponent></FilterComponent>
             </View>
 
             {/* En caso de que menuInvisible se encuentre en true, se ""generará"" el menu lateral */}
@@ -95,4 +97,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UserListScreen;
+export default FilterScreen;

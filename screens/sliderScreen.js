@@ -4,12 +4,17 @@ import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import MenuLateral from '../components/menuLateral';
 import MenuInferior from '../menuAbajo';
 import SliderComponent from '../components/slider';
+import { useNavigation } from '@react-navigation/native';
 
-function sliderScreen() {
+function SliderScreen() {
+    const navigation = useNavigation();
     const [menuVisible, setMenuVisible] = useState(false);
 
     // Esto hay que mirarlo bien, ya que esta el contenido metido dentro del menu superior, de formar que el overlay del menu lateral sirva para todos
 
+    function ahuevo(){
+        navigation.navigate('ProfileScreen')
+    }
     return (
         <View style={styles.contenedor}>
             <View style={styles.menuSuperior}>
@@ -17,8 +22,10 @@ function sliderScreen() {
                     <Image source={require('../logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
                 </TouchableOpacity>
                 <Text style={styles.textoMenuSuperior}>PRO-TACTIC</Text>
-                <Image source={require('../logos/usuario.png')} style={styles.imagenMenuSuperior} />
-            </View>
+                <TouchableOpacity onPress={ahuevo}>
+                    <Image source={require('../logos/usuario.png')} style={styles.imagenMenuSuperior} />
+                </TouchableOpacity>
+             </View>
             <View style={styles.lineaSuperior}></View>
 
             <View style={styles.contenido}>
@@ -95,4 +102,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default sliderScreen;
+export default SliderScreen;

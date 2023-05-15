@@ -33,7 +33,6 @@ function UserList() {
 
     return (
         <View style={styles.containerGeneral}>
-            {/* <MenuSuperior /> */}
 
             <View style={styles.contenedor}>
                     <TextInput

@@ -3,8 +3,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput 
 
 import firebase from 'firebase/app';
 import 'firebase/database';
-import MenuInferior from '../menuAbajo';
-import MenuSuperior from '../menuSuperior';
 
 
 function ExerciseBigCard() {

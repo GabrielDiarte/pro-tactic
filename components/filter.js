@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker as PickerRN } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 
 const opcionesCampo1 = ['Futbol ', 'Basket'];
 const opcionesCampo2 = ['Low', 'Medium', 'Hard'];
@@ -9,7 +10,9 @@ const opcionesCampo4 = ['Individual', 'Parejas', 'Grupos'];
 const opcionesCampo5 = ['+7', '+14', '+18'];
 const opcionesCampo6 = ['Calentamiento', 'Fisico', 'Estiramiento '];
 
-const filterComponent = () => {
+const FilterComponent = () => {
+    const navigation = useNavigation();
+
     const [dato, setDato] = useState('');
     const [opcion1, setOpcion1] = useState(opcionesCampo1[0]);
     const [opcion2, setOpcion2] = useState(opcionesCampo2[0]);
@@ -25,8 +28,7 @@ const filterComponent = () => {
     return (
         
         <View style={styles.container}>
-            <TextInput
-                style={styles.input}
+            <TextInput style={styles.input}
                 value={dato}
                 onChangeText={setDato}
                 placeholder="Buscar Actividad"
@@ -114,7 +116,7 @@ const filterComponent = () => {
                     </PickerRN>
                 </View>
             </View>
-            <TouchableOpacity style={styles.button} >
+            <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('TrainingListScreen')}}>
                             <Text style={styles.buttonText}>Filtrar</Text>
                 </TouchableOpacity>
         </View>
@@ -127,6 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
+        marginBottom: 100,
     },
     input: {
         width: '100%',
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         width: '100%',
-        height: 50,
+        height: 40,
         borderWidth: 1,
         borderColor: 'gray',    
         justifyContent: 'center',
@@ -169,4 +172,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default filterComponent;
+export default FilterComponent;

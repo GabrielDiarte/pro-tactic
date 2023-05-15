@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import MenuLateral from './components/menuLateral';
 import MenuInferior from './menuAbajo';
-import TrainingList from './trainingList';
+import TrainingList from './components/trainingList';
 
 function MenuSuperior() {
+    const navigation = useNavigation();
     const [menuVisible, setMenuVisible] = useState(false);
 
+    const handlePress = (vairbale) => {
+        console.log(vairbale)
+        navigation.navigate('FilterScreen');
+    };
     // Esto hay que mirarlo bien, ya que esta el contenido metido dentro del menu superior, de formar que el overlay del menu lateral sirva para todos
 
     return (
@@ -17,11 +23,14 @@ function MenuSuperior() {
                     <Image source={require('./logos/tres-puntos.png')} style={styles.imagenMenuSuperior} />
                 </TouchableOpacity>
                 <Text style={styles.textoMenuSuperior}>PRO-TACTIC</Text>
-                <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
+                <TouchableOpacity onPress={()=>handlePress(true)}>
+                    <Image source={require('./logos/usuario.png')} style={styles.imagenMenuSuperior} />
+                </TouchableOpacity>
             </View>
             <View style={styles.lineaSuperior}></View>
 
             {/* <View style={styles.contenido}>
+            
                 <TrainingList></TrainingList>
             </View> */}
 
@@ -32,9 +41,9 @@ function MenuSuperior() {
                 </TouchableOpacity>
             )}
 
-            
-                {/* <MenuInferior></MenuInferior> */}
-            
+
+            {/* <MenuInferior></MenuInferior> */}
+
         </View>
     );
 }

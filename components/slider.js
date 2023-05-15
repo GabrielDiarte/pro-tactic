@@ -26,7 +26,7 @@ function SliderComponentScreen() {
                             dotStyle={styles.dotStyle}
                             activeDotStyle={styles.activeDotStyle}
                             autoplay={true}
-                            autoplayTimeout={50000}
+                            autoplayTimeout={5}
                             loop={true}>
                             {images.map((image, index) => (
                                 <Image source={image} style={styles.foto} resizeMode="cover" />
@@ -48,7 +48,7 @@ function SliderComponentScreen() {
                             dotStyle={styles.dotStyle}
                             activeDotStyle={styles.activeDotStyle}
                             autoplay={true}
-                            autoplayTimeout={500000}
+                            autoplayTimeout={5}
                             loop={true}>
                             {images.map((image, index) => (
                                 <Image source={image} style={styles.foto} resizeMode="cover" />
@@ -70,7 +70,7 @@ function SliderComponentScreen() {
                             dotStyle={styles.dotStyle}
                             activeDotStyle={styles.activeDotStyle}
                             autoplay={true}
-                            autoplayTimeout={50000}
+                            autoplayTimeout={5}
                             loop={true}>
                             {images.map((image, index) => (
                                 <Image source={image} style={styles.foto} resizeMode="cover" />

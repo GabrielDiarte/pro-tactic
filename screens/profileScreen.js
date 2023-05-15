@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const profileScreen = () => {
+const ProfileScreen = () => {
     return (
         <View style={styles.containerGeneral}>
             <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default profileScreen;
+export default ProfileScreen;

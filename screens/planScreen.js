@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const planScreen = () => {
+const PlanScreen = () => {
 
 
     const [selected, setSelected] = useState('');
@@ -173,4 +173,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default planScreen;
+export default PlanScreen;

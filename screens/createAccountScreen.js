@@ -16,7 +16,7 @@ const CreateAccountScreen = ({ onRegister }) => {
     return (
       <View style={stylesCreateAccount.container}>
 
-        <Image source={require('./logos/silbato-fondo.jpg')} style={stylesCreateAccount.image} />
+        <Image source={require('../logos/silbato-fondo.jpg')} style={stylesCreateAccount.image} />
         <Text style={stylesCreateAccount.title}>Pro-Tactic</Text>
         <TextInput
           style={stylesCreateAccount.input}

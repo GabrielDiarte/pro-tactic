@@ -1,10 +1,12 @@
 import { registerRootComponent } from 'expo';
 
 import App from './App';
-import createAccount from './createAccount';
+import LoginScreen from './screens/loginScreen';
+import CreateAccountScreen from './screens/createAccountScreen';
 import MenuAbajo from './menuAbajo';
 import MenuSuperior from './menuSuperior';
-import TrainingList from './trainingList';
+import TrainingList from './components/trainingList';
+import TrainingListScreen from './screens/trainingListScreen';
 import MenuLateral from './components/menuLateral';
 import profileScreen from './screens/profileScreen';
 import { AppRegistry } from 'react-native';
@@ -16,13 +18,15 @@ import BigCardScreen from './screens/bigCardScreen';
 import SliderComponent from './components/slider';
 import SliderComponentScreen from './components/slider';
 import sliderScreen from './screens/sliderScreen';
-import filterComponent from './components/filter';
+import FilterComponent from './components/filter';
+import filterScreen from './screens/filterScreen';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 
-//registerRootComponent(App);
+registerRootComponent(App);
+//registerRootComponent(LoginScreen)
 //registerRootComponent(createAccount);
 //registerRootComponent(MenuAbajo);
 //registerRootComponent(MenuSuperior);
@@ -36,4 +40,5 @@ import filterComponent from './components/filter';
 //registerRootComponent(BigCardScreen)
 //registerRootComponent(sliderComponent)
 //registerRootComponent(sliderScreen)
-registerRootComponent(filterComponent)
+//registerRootComponent(FilterComponent)
+//registerRootComponent(filterScreen)
