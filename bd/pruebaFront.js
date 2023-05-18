@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
@@ -7,29 +7,32 @@ import axios from 'axios';
 
 const imprimirMensaje = () => {
     const tabla = "exercises";
-    const filtro = "_intensidad: 'baja'";
-
-    fetch(`http://localhost:3000/exercises/${tabla}/${filtro}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // Aquí puedes hacer algo con los datos recibidos   
-    })
-    .catch(error => console.error(error));
-
-    return (
-
-
-        <TouchableOpacity style={styles.buttonVerMas} onPress={() => imprimirMensaje()}>
-            <Text style={styles.buttonVerMasText}>Ver más</Text>
-        </TouchableOpacity>
-
-    );
-
+    const filtro = '_intensidad: "media"';
+    
+    const url = `http://192.168.1.102:3000/exercises/${encodeURIComponent(tabla)}/${encodeURIComponent(filtro)}`;
+    console.log(url);
+    
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    fetchData();
 };
 
-export default imprimirMensaje();
 
-const entrenamientos = [
+    // fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data); // Aquí puedes hacer algo con los datos recibidos   
+    //     })
+    //     .catch(error => console.error(error));
+
+ const entrenamientos = [
     // {
     //     _id: "6463286891cb219bcf0a6f1a",
     //     _name: 'Posesion por equipos',
@@ -44,46 +47,67 @@ const entrenamientos = [
     //     _intensidad: 'baja',
     //     _nPerso: 1
     // }
-];
+ ];
 
 
-// function PruebaBD() {
+function PruebaBD() {
+    const [entrenamientos, setEntrenamientos] = useState([]);
 
-//     return (
-//         <View style={styles.containerGeneral}>
-//             <View style={styles.contenedor} >
-//                 <ScrollView showsVerticalScrollIndicator={false} >
-//                     {entrenamientos.map((entrenamiento) => (
-//                         <View style={styles.tarjeta} onPress={() => imprimirMensaje}>
-//                             <View style={styles.infoConFoto}>
-//                                 <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
+  useEffect(() => {
+    const imprimirMensaje = async () => {
+      const tabla = "exercises";
+      const filtro = '_intensidad: "baja"';
 
-//                                 <View style={styles.infoTarjeta}>
-//                                     <Text style={styles.nombre}>{entrenamiento._name}</Text>
-//                                     <Text style={styles.descripcion}>{entrenamiento._dificultad}</Text>
-//                                     <Text style={styles.descripcion}>{entrenamiento._intensidad}</Text>
-//                                     <Text style={styles.descripcion}>{entrenamiento._nPerso}</Text>
-//                                     <TouchableOpacity style={styles.buttonVerMas}
-//                                         // onPress={() => handleVerMas(entrenamiento.id)}
-//                                         onPress={() => { navigation.navigate('BigCardScreen') }}>
-//                                         <Text style={styles.buttonVerMasText}>Ver más</Text>
-//                                     </TouchableOpacity>
+      const url = `http://192.168.1.102:3000/exercises/${encodeURIComponent(tabla)}/${encodeURIComponent(filtro)}`;
+      console.log(url);
 
-//                                 </View>
-//                             </View>
-//                         </View>
+      try {
+        const response = await axios.get(url);
+        console.log(response.data);
+        setEntrenamientos(response.data); // Establece el valor de la variable externa
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-//                     ))}
-//                 </ScrollView>
-//                 <TouchableOpacity style={styles.buttonVerMas} onPress={() => imprimirMensaje()}>
-//                     <Text style={styles.buttonVerMasText}>Ver más</Text>
-//                 </TouchableOpacity>
-//             </View>
+    imprimirMensaje();
+  }, []);
 
-//         </View>
-//     );
+    return (
+        <View style={styles.containerGeneral}>
+            <View style={styles.contenedor} >
+                <ScrollView showsVerticalScrollIndicator={false} >
+                    {entrenamientos.map((entrenamiento) => (
+                        <View style={styles.tarjeta} onPress={() => imprimirMensaje}>
+                            <View style={styles.infoConFoto}>
+                                <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
 
-// }
+                                <View style={styles.infoTarjeta}>
+                                    <Text style={styles.nombre}>{entrenamiento._name}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento._dificultad}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento._intensidad}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento._nPerso}</Text>
+                                    <TouchableOpacity style={styles.buttonVerMas}
+                                        // onPress={() => handleVerMas(entrenamiento.id)}
+                                        onPress={() => { navigation.navigate('BigCardScreen') }}>
+                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            </View>
+                        </View>
+
+                    ))}
+                </ScrollView>
+                <TouchableOpacity style={styles.buttonVerMas} onPress={() => imprimirMensaje()}>
+                    <Text style={styles.buttonVerMasText}>Ver más</Text>
+                </TouchableOpacity>
+            </View>
+
+        </View>
+    );
+
+}
 
 const styles = StyleSheet.create({
     containerGeneral: {
@@ -184,4 +208,4 @@ const styles = StyleSheet.create({
 
 });
 
-// export default PruebaBD;
+export default PruebaBD;

@@ -20,12 +20,13 @@ import SliderComponentScreen from './components/slider';
 import sliderScreen from './screens/sliderScreen';
 import FilterComponent from './components/filter';
 import filterScreen from './screens/filterScreen';
+import PruebaBD from './bd/pruebaFront';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 
-registerRootComponent(App);
+//registerRootComponent(App);
 //registerRootComponent(LoginScreen)
 //registerRootComponent(createAccount);
 //registerRootComponent(MenuAbajo);
@@ -42,3 +43,4 @@ registerRootComponent(App);
 //registerRootComponent(sliderScreen)
 //registerRootComponent(FilterComponent)
 //registerRootComponent(filterScreen)
+registerRootComponent(PruebaBD)
