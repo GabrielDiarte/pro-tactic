@@ -3,53 +3,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import axios from 'axios';
 
 
-// const [ejercicios, setEjercicios] = useState([]);
-
-const imprimirMensaje = () => {
-    const tabla = "exercises";
-    const filtro = '_intensidad: "media"';
-    
-    const url = `http://192.168.1.102:3000/exercises/${encodeURIComponent(tabla)}/${encodeURIComponent(filtro)}`;
-    console.log(url);
-    
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(url);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    fetchData();
-};
-
-
-    // fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data); // Aquí puedes hacer algo con los datos recibidos   
-    //     })
-    //     .catch(error => console.error(error));
-
- const entrenamientos = [
-    // {
-    //     _id: "6463286891cb219bcf0a6f1a",
-    //     _name: 'Posesion por equipos',
-    //     _dificultad: 'facil',
-    //     _intensidad: 'media',
-    //     _nPerso: 8
-    // },
-    // {
-    //     _id: "6463298391cb219bcf0a6f1b",
-    //     _name: 'Control de balon',
-    //     _dificultad: 'facil',
-    //     _intensidad: 'baja',
-    //     _nPerso: 1
-    // }
- ];
-
-
 function PruebaBD() {
     const [entrenamientos, setEntrenamientos] = useState([]);
 
