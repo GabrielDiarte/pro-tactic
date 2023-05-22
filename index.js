@@ -26,7 +26,7 @@ import PruebaBD from './bd/pruebaFront';
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 
-//registerRootComponent(App);
+registerRootComponent(App);
 //registerRootComponent(LoginScreen)
 //registerRootComponent(createAccount);
 //registerRootComponent(MenuAbajo);
@@ -43,4 +43,4 @@ import PruebaBD from './bd/pruebaFront';
 //registerRootComponent(sliderScreen)
 //registerRootComponent(FilterComponent)
 //registerRootComponent(filterScreen)
-registerRootComponent(PruebaBD)
+//registerRootComponent(PruebaBD)

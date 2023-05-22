@@ -1,26 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
 
 
 function PruebaBD() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { datos } = route.params;
+
     const [entrenamientos, setEntrenamientos] = useState([]);
 
   useEffect(() => {
+
     const imprimirMensaje = async () => {
-      const tabla = "exercises";
-      const filtro = '_intensidad: "baja"';
+        const { deporte, dificultad, edad, intensidad, objetivo, personas } = datos;
+        const deporteQuery = "deporte: " + '"' + deporte + '",';
+        const dificultadQuery = "dificultad: " + '"' + dificultad + '",';
+        const edadQuery = "edad: " + '' + edad + ',';
+        const intensidadQuery = "intensidad: " + '"' + intensidad + '",';
+        const objetivoQuery = "objetivo: " + '"' + objetivo + '",';
+        const personasQuery = "personas: " + '"' + personas + '",';
 
-      const url = `http://192.168.1.102:3000/exercises/${encodeURIComponent(tabla)}/${encodeURIComponent(filtro)}`;
-      console.log(url);
+        const finalQuery = deporteQuery + dificultadQuery + edadQuery + intensidadQuery + objetivoQuery + personasQuery; 
 
-      try {
-        const response = await axios.get(url);
-        console.log(response.data);
-        setEntrenamientos(response.data); // Establece el valor de la variable externa
-      } catch (error) {
-        console.error(error);
-      }
+        const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
+        const filtro = `${encodeURIComponent(finalQuery)}`;
+    
+        const url = `${baseUrl}/${filtro}`;
+        console.log('URL generada:', url);
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(url);
+                console.log(response.data);
+                setEntrenamientos(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchData();
+
     };
 
     imprimirMensaje();
@@ -36,10 +59,12 @@ function PruebaBD() {
                                 <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
 
                                 <View style={styles.infoTarjeta}>
-                                    <Text style={styles.nombre}>{entrenamiento._name}</Text>
-                                    <Text style={styles.descripcion}>{entrenamiento._dificultad}</Text>
-                                    <Text style={styles.descripcion}>{entrenamiento._intensidad}</Text>
-                                    <Text style={styles.descripcion}>{entrenamiento._nPerso}</Text>
+                                    <Text style={styles.nombre}>{entrenamiento.deporte}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.dificultad}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.edad}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.intensidad}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.objetivo}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.personas}</Text>
                                     <TouchableOpacity style={styles.buttonVerMas}
                                         // onPress={() => handleVerMas(entrenamiento.id)}
                                         onPress={() => { navigation.navigate('BigCardScreen') }}>

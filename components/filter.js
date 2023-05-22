@@ -3,27 +3,36 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import { Picker as PickerRN } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
-const opcionesCampo1 = ['Futbol ', 'Basket'];
+const opcionesCampo1 = ['Futbol', 'Basket'];
 const opcionesCampo2 = ['Low', 'Medium', 'Hard'];
 const opcionesCampo3 = ['Low', 'Medium', 'Hard'];
 const opcionesCampo4 = ['Individual', 'Parejas', 'Grupos'];
-const opcionesCampo5 = ['+7', '+14', '+18'];
+const opcionesCampo5 = ['7', '14', '18'];
 const opcionesCampo6 = ['Calentamiento', 'Fisico', 'Estiramiento '];
 
 const FilterComponent = () => {
     const navigation = useNavigation();
 
     const [dato, setDato] = useState('');
-    const [opcion1, setOpcion1] = useState(opcionesCampo1[0]);
-    const [opcion2, setOpcion2] = useState(opcionesCampo2[0]);
-    const [opcion3, setOpcion3] = useState(opcionesCampo3[0]);
-    const [opcion4, setOpcion4] = useState(opcionesCampo4[0]);
-    const [opcion5, setOpcion5] = useState(opcionesCampo5[0]);
-    const [opcion6, setOpcion6] = useState(opcionesCampo6[0]);
+    const [deporte, setDeporte] = useState(opcionesCampo1[0]);
+    const [dificultad, setDificultad] = useState(opcionesCampo2[0]);
+    const [intensidad, setIntensidad] = useState(opcionesCampo3[0]);
+    const [personas, setPersonas] = useState(opcionesCampo4[0]);
+    const [edad, setEdad] = useState(opcionesCampo5[0]);
+    const [objetivo, setObjetivo] = useState(opcionesCampo6[0]);
 
     const buscar = () => {
-        // Lógica para realizar la búsqueda
-    };
+        const datos = {
+          deporte,
+          dificultad,
+          intensidad,
+          personas,
+          edad,
+          objetivo,
+        };
+        // Envía los datos a la pantalla de destino
+        navigation.navigate('PruebaBD', { datos });
+      };
 
     return (
         
@@ -37,8 +46,8 @@ const FilterComponent = () => {
                 <Text style={styles.pickerTitle}>Deporte</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion1}
-                        onValueChange={(value) => setOpcion1(value)}
+                        selectedValue={deporte}
+                        onValueChange={(value) => setDeporte(value)}
                     >
                         {opcionesCampo1.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -51,8 +60,8 @@ const FilterComponent = () => {
                 <Text style={styles.pickerTitle}>Dificultad</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion2}
-                        onValueChange={(value) => setOpcion2(value)}
+                        selectedValue={dificultad}
+                        onValueChange={(value) => setDificultad(value)}
                     >
                         {opcionesCampo2.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -65,8 +74,8 @@ const FilterComponent = () => {
                 <Text style={styles.pickerTitle}>Intensidad</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion3}
-                        onValueChange={(value) => setOpcion3(value)}
+                        selectedValue={intensidad}
+                        onValueChange={(value) => setIntensidad(value)}
                     >
                         {opcionesCampo3.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -76,11 +85,11 @@ const FilterComponent = () => {
             </View>
 
             <View style={styles.pickerWrapper}>
-                <Text style={styles.pickerTitle}>Personas</Text>
+                <Text style={styles.pickerTitle}>Numero de personas</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion4}
-                        onValueChange={(value) => setOpcion4(value)}
+                        selectedValue={personas}
+                        onValueChange={(value) => setPersonas(value)}
                     >
                         {opcionesCampo4.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -93,8 +102,8 @@ const FilterComponent = () => {
                 <Text style={styles.pickerTitle}>Edad</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion5}
-                        onValueChange={(value) => setOpcion5(value)}
+                        selectedValue={edad}
+                        onValueChange={(value) => setEdad(value)}
                     >
                         {opcionesCampo5.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -107,8 +116,8 @@ const FilterComponent = () => {
                 <Text style={styles.pickerTitle}>Objetivos</Text>
                 <View style={styles.pickerContainer}>
                     <PickerRN
-                        selectedValue={opcion6}
-                        onValueChange={(value) => setOpcion6(value)}
+                        selectedValue={objetivo}
+                        onValueChange={(value) => setObjetivo(value)}
                     >
                         {opcionesCampo6.map((opcion) => (
                             <PickerRN.Item key={opcion} label={opcion} value={opcion} />
@@ -116,7 +125,7 @@ const FilterComponent = () => {
                     </PickerRN>
                 </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('TrainingListScreen')}}>
+            <TouchableOpacity style={styles.button} onPress={buscar}>
                             <Text style={styles.buttonText}>Filtrar</Text>
                 </TouchableOpacity>
         </View>

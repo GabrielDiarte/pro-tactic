@@ -10,6 +10,7 @@ import PlanScreen from './screens/planScreen';
 import ProfileScreen from './screens/profileScreen';
 import UserListScreen from './screens/userListScreen';
 import TrainingListScreen from './screens/trainingListScreen';
+import PruebaBD from './bd/pruebaFront';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,8 @@ const App = () => {
         <Stack.Screen name="UserListScreen" component={UserListScreen} />
         <Stack.Screen name="CreateAccountScreen" component={CreateAccount} />
         <Stack.Screen name="TrainingListScreen" component={TrainingListScreen} />
+
+        <Stack.Screen name="PruebaBD" component={PruebaBD} />
       </Stack.Navigator>
     </NavigationContainer>
 
