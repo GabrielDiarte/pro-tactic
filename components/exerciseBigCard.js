@@ -1,73 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
-
-import firebase from 'firebase/app';
-import 'firebase/database';
-
+import axios from 'axios';
+import { useRoute } from '@react-navigation/native';
 
 function ExerciseBigCard() {
+    const route = useRoute();
+    const { nombre } = route.params;
+
+    const [entrenamientosIndividual, setEntrenamientosIndividual] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const nombreQuery = "nombre: " + '"' + nombre + '",';
+
+            const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
+            const filtro = `${encodeURIComponent(nombreQuery)}`;
+
+            const url = `${baseUrl}/${filtro}`;
+            console.log('URL generada parte 2:', url);
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log('Respuesta:', data); // Mostrar respuesta en la consola
+                setEntrenamientosIndividual(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+    const bajo = {
+        color: 'green',
+        fontSize: 25,
+    };
+    const medio = {
+        color: 'yellow'
+    };
+    const alto = {
+        color: 'red',
+        fontSize: 25,
+    };
 
     return (
-        <View style={styles.contenedor}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.tituloContainer}>
-                    <Text style={styles.tituloTexto}>POSESIÓN POR EQUIPOS</Text>
-                </View>
-                <View style={styles.fotoContainer}>
-                    <Image source={require('../fotos/futbol/posesion.jpg')} style={styles.foto} />
-                </View>
-                <View style={styles.descripcionContainer}>
-                    <Text style={styles.tituloDescripcion}>Características</Text>
-                    <View style={styles.caracteristicasContainer}>
-                        <View style={styles.caracteristicasContainerIndividual}>
-                            <View style={styles.prueba}>
-                                <Text style={styles.prueba2}>Dificultad</Text>
+        <View style={styles.containerGeneral}>
+            <View style={styles.contenedor}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {entrenamientosIndividual.map((entrenamiento, index) => (
+                        <View key={index}>
+                            <View style={styles.tituloContainer}>
+                                <Text style={styles.tituloTexto}>{entrenamiento.nombre}</Text>
                             </View>
-                            <Text style={styles.textoCaracteristicas}>Baja</Text>
-                        </View>
-                        <View style={styles.caracteristicasContainerIndividual}>
-                            <View style={styles.prueba}>
-                                <Text style={styles.prueba2}>Intensidad</Text>
+                            <View style={styles.fotoContainer}>
+                                <Image source={require('../fotos/futbol/posesion.jpg')} style={styles.foto} />
                             </View>
-                            <Text style={styles.textoCaracteristicas}>Media</Text>
-                        </View>
-                        <View style={styles.caracteristicasContainerIndividual}>
-                            <View style={styles.prueba}>
-                                <Text style={styles.prueba2}>Edad recomendada:</Text>
-                            </View>
-                            <Text style={styles.textoCaracteristicas}>14-20</Text>
-                        </View>
-                    </View>
-                    <Text style={styles.tituloDescripcion}>Descripción</Text>
-                    <Text style={styles.descripcionTexto}>
-                        Realizar una posesión entre 2 equipos. Cada equipo tiene un comodín en cada
-                        lateral del área de trabajo. El objetivo de cada equipo es realizar 10 pases
-                        seguidos. Cada vez que se haga un pasa a un comodín exterior, se deberá cambiar
-                        la posición con él. El ejercicio finaliza cuando un equipos consiga 3 puntos o
-                        se acabe el tiempo de trabajo.
-                    </Text>
-                    <Text style={styles.tituloDescripcion}>Material necesario</Text>
-                    <View style={styles.materialNecesarioContainer}>
-                        <View style={styles.materialContainerIndividual}>
-                            <Text style={styles.materialNecesarioTexto}>· Conos</Text>
-                        </View>
-                        <View style={styles.materialContainerIndividual}>
-                            <Text style={styles.materialNecesarioTexto}>· Petos</Text>
-                        </View>
-                        <View style={styles.materialContainerIndividual}>
-                            <Text style={styles.materialNecesarioTexto}>· Balones</Text>
-                        </View>
-                        <View style={styles.materialContainerIndividual}>
-                            <Text style={styles.materialNecesarioTexto}>· Balones</Text>
-                        </View>
+                            <View style={styles.descripcionContainer}>
+                                <Text style={styles.tituloDescripcion}>Atributos</Text>
+                                <View style={styles.caracteristicasContainer}>
+                                    <View style={styles.caracteristicasContainerIndividual}>
+                                        <View style={styles.prueba}>
+                                            <Text style={styles.prueba2}>Dificultad</Text>
+                                        </View>
+                                       <Text style={entrenamiento.dificultad === 'Low' ? bajo : alto}>{entrenamiento.dificultad}</Text>
 
-                    </View>
-                </View>
-            </ScrollView>
+                                    </View>
+                                    <View style={styles.caracteristicasContainerIndividual}>
+                                        <View style={styles.prueba}>
+                                            <Text style={styles.prueba2}>Intensidad</Text>
+                                        </View>
+                                        <Text style={entrenamiento.intensidad === 'Low' ? bajo : entrenamiento.intensidad === 'Medium' ? medio : alto} >{entrenamiento.intensidad}</Text>
+                                    </View>
+                                    <View style={styles.caracteristicasContainerIndividual}>
+                                        <View style={styles.prueba}>
+                                            <Text style={styles.prueba2}>Edad minima:</Text>
+                                        </View>
+                                        <Text style={styles.textoCaracteristicas}>{entrenamiento.edad}</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.tituloDescripcion}>Descripción</Text>
+                                <Text style={styles.descripcionTexto}>{entrenamiento.descripcion}</Text>
+                                <Text style={styles.tituloDescripcion}>Material necesario</Text>
+                                <View style={styles.materialNecesarioContainer}>
+                                    {entrenamiento.material.map((material, index) => (
+                                        <View key={index} style={styles.materialContainerIndividual}>
+                                            <Text style={styles.materialNecesarioTexto}>{material}</Text>
+                                        </View>
+                                    ))}
+
+                                </View>
+                            </View>
+                        </View>
+                    ))}
+                </ScrollView>
+            </View>
         </View>
-    );
-
+    ); 
 }
+
 const styles = StyleSheet.create({
     containerGeneral: {
         flex: 1
@@ -87,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         textAlign: 'center',
         fontWeight: 'bold',
-        textShadowOffset: {width: 2, height: 2},
+        textShadowOffset: { width: 2, height: 2 },
         textShadowRadius: 5,
         textShadowColor: '#FAC710'
     },
@@ -120,7 +152,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     prueba: {
-        height: 50, // 20 porque asi pilla 2 lineas de texto
+        height: 50,
         textAlign: 'center',
         justifyContent: 'center'
     },
@@ -133,7 +165,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: 'green'
     },
-
     descripcionTexto: {
         textAlign: 'justify',
         fontSize: 15,
@@ -151,12 +182,6 @@ const styles = StyleSheet.create({
         marginHorizontal: '1.5%',
         marginBottom: '1.5%',
     },
-
-
-
-
-
-
 });
 
 export default ExerciseBigCard;

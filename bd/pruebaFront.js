@@ -35,8 +35,8 @@ function PruebaBD() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(url);
-                console.log(response.data);
-                setEntrenamientos(response.data)
+                // console.log(response.data);
+                setEntrenamientos(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -60,17 +60,18 @@ function PruebaBD() {
 
                                 <View style={styles.infoTarjeta}>
                                     <Text style={styles.nombre}>{entrenamiento.deporte}</Text>
+                                    <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
+                                    <TouchableOpacity style={styles.buttonVerMas}
+                                        // onPress={() => handleVerMas(entrenamiento.id)}
+                                        onPress={() => { navigation.navigate('BigCardScreen', { nombre: entrenamiento.nombre }) }}>
+                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
+                                    </TouchableOpacity>
                                     <Text style={styles.descripcion}>{entrenamiento.dificultad}</Text>
                                     <Text style={styles.descripcion}>{entrenamiento.edad}</Text>
                                     <Text style={styles.descripcion}>{entrenamiento.intensidad}</Text>
                                     <Text style={styles.descripcion}>{entrenamiento.objetivo}</Text>
                                     <Text style={styles.descripcion}>{entrenamiento.personas}</Text>
-                                    <TouchableOpacity style={styles.buttonVerMas}
-                                        // onPress={() => handleVerMas(entrenamiento.id)}
-                                        onPress={() => { navigation.navigate('BigCardScreen') }}>
-                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
-                                    </TouchableOpacity>
-
+                                    
                                 </View>
                             </View>
                         </View>
