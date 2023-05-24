@@ -64,7 +64,7 @@ function ExerciseBigCard() {
                                         <View style={styles.prueba}>
                                             <Text style={styles.prueba2}>Dificultad</Text>
                                         </View>
-                                       <Text style={entrenamiento.dificultad === 'Low' ? bajo : alto}>{entrenamiento.dificultad}</Text>
+                                       <Text style={entrenamiento.dificultad === 'Low' ? bajo : entrenamiento.dificultad === 'Medium' ? medio : alto}>{entrenamiento.dificultad}</Text>
 
                                     </View>
                                     <View style={styles.caracteristicasContainerIndividual}>
