@@ -16,7 +16,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../logos/silbato-fondo.jpg')} style={styles.image} />
+        <Image source={require('../logos/silbato-fondo.jpg')} style={styles.image} />
       <Text style={styles.title}>Pro-Tactic</Text>
       <TextInput
         style={styles.input}
@@ -40,9 +40,9 @@ const LoginScreen = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <Text style={styles.subtitle}>¿Nuevo en ProTactic?<Text style={styles.subtitleYellow} onPress={() => { navigation.navigate('CreateAccountScreen')}}>
-          Crea una cuenta
-        </Text>
+      <Text style={styles.subtitle}>¿Nuevo en ProTactic?<Text style={styles.subtitleYellow} onPress={() => { navigation.navigate('CreateAccountScreen') }}>
+        Crea una cuenta
+      </Text>
       </Text>
     </View>
   );
@@ -50,15 +50,15 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#fff',
     paddingHorizontal: 30,
   },
   image: {
-    height: 200,
+    height: 220,
     width: '120%',
-    marginBottom: 60,
+    marginBottom: 60
   },
   title: {
     fontSize: 32,

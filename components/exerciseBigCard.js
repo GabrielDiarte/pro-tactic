@@ -17,7 +17,7 @@ function ExerciseBigCard() {
             const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
             const filtro = `${encodeURIComponent(nombreQuery)}`;
 
-            const url = `${baseUrl}/${filtro}`;
+            const url = `${baseUrl}/${nombreQuery}`;
             console.log('URL generada parte 2:', url);
             try {
                 const response = await fetch(url);

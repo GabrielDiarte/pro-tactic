@@ -24,7 +24,27 @@ function PruebaBD() {
         const objetivoQuery = "objetivo: " + '"' + objetivo + '",';
         const personasQuery = "personas: " + '"' + personas + '",';
 
-        const finalQuery = deporteQuery + dificultadQuery + edadQuery + intensidadQuery + objetivoQuery + personasQuery; 
+        var finalQuery = "";
+        if (deporte != "Cualquiera"){
+            finalQuery += deporteQuery;
+        }
+        if (dificultad != "Cualquiera"){
+            finalQuery += dificultadQuery;
+        }
+        if (edad != "Cualquiera"){
+            finalQuery += edadQuery;
+        }
+        if (intensidad != "Cualquiera"){
+            finalQuery += intensidadQuery;
+        }
+        if (objetivo != "Cualquiera"){
+            finalQuery += objetivoQuery;
+        }
+        if (personas != "Cualquiera"){
+            finalQuery += personasQuery;
+        }
+        console.log(finalQuery);
+        
 
         const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
         const filtro = `${encodeURIComponent(finalQuery)}`;

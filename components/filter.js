@@ -3,12 +3,12 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import { Picker as PickerRN } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
-const opcionesCampo1 = ['Futbol', 'Basket'];
-const opcionesCampo2 = ['Low', 'Medium', 'Hard'];
-const opcionesCampo3 = ['Low', 'Medium', 'Hard'];
-const opcionesCampo4 = ['Individual', 'Parejas', 'Grupos'];
-const opcionesCampo5 = ['7', '14', '18'];
-const opcionesCampo6 = ['Calentamiento', 'Fisico', 'Estiramiento '];
+const opcionesCampo1 = ['Cualquiera','Futbol', 'Basket'];
+const opcionesCampo2 = ['Cualquiera', 'Low', 'Medium', 'Hard'];
+const opcionesCampo3 = ['Cualquiera', 'Low', 'Medium', 'Hard'];
+const opcionesCampo4 = ['Cualquiera', 'Individual', 'Parejas', 'Grupos'];
+const opcionesCampo5 = ['Cualquiera', '7', '14', '18'];
+const opcionesCampo6 = ['Cualquiera', 'Calentamiento', 'Fisico', 'Estiramiento'];
 
 const FilterComponent = () => {
     const navigation = useNavigation();

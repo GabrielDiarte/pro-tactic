@@ -85,15 +85,15 @@ const CreateAccountScreen = ({ onRegister }) => {
   
   const stylesCreateAccount = StyleSheet.create({
     container: {
+      flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor: '#fff',
       paddingHorizontal: 30,
     },
     image: {
-      height: 200,
+      height: 220,
       width: '120%',
-      marginBottom: 15
+      marginBottom: 10
     },
     title: {
       fontSize: 32,
