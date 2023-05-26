@@ -31,7 +31,8 @@ const FilterComponent = () => {
           objetivo,
         };
         // Envía los datos a la pantalla de destino
-        navigation.navigate('PruebaBD', { datos });
+        // navigation.navigate('PruebaBD', { datos });
+        navigation.navigate('TrainingListScreen', { datos });
       };
 
     return (

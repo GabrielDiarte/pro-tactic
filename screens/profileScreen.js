@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const ProfileScreen = () => {
+
+    const [usuario, setUsuario] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const nombreQuery = "nombre: " + '"' + nombre + '",';
+
+            const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
+            const filtro = `${encodeURIComponent(nombreQuery)}`;
+
+            const url = `${baseUrl}/${nombreQuery}`;
+            console.log('URL generada parte 2:', url);
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log('Respuesta:', data); // Mostrar respuesta en la consola
+                setEntrenamientosIndividual(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <View style={styles.containerGeneral}>
             <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>

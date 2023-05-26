@@ -1,85 +1,104 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-
-import firebase from 'firebase/app';
-import 'firebase/database';
-
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 
-const entrenamientos = [
-    {
-        id: 1,
-        imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAbIQ6kkqfA5HSWcTYIQGNTnwHMSYH6_jWW4XOHkfNSWDTWlJLYQsq2X4GKjUg8yvXtM&usqp=CAU',
-        nombre: 'Ejercicio 1',
-        descripcion: 'Una breve descripción del ejercicio 1.Una breve descripción del ejercicio 1.',
-    },
-    {
-        id: 2,
-        imagen: 'https://www.fiebrefutbol.es/wp-content/uploads/2012/08/2.jpg',
-        nombre: 'Ejercicio 2',
-        descripcion: 'Una breve descripción del ejercicio 2.Una breve descripción del ejercicio 2.',
-    },
-    {
-        id: 3,
-        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-        nombre: 'Ejercicio 3',
-        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 3.',
-    },
-    {
-        id: 4,
-        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-        nombre: 'Ejercicio 4',
-        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 4.',
-    },
-    {
-        id: 5,
-        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-        nombre: 'Ejercicio 5',
-        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 5.',
-    },
-    {
-        id: 6,
-        imagen: 'https://i.pinimg.com/736x/41/c0/30/41c03069aa145face6fa90aae4507251.jpg',
-        nombre: 'Ejercicio 6',
-        descripcion: 'Una breve descripción del ejercicio 3.Una breve descripción del ejercicio 6.',
-    },
 
-];
 
 function TrainingList() {
     const navigation = useNavigation();
-    const [ejercicios, setEjercicios] = useState([]);
+    const route = useRoute();
+    const { datos } = route.params;
 
-return (
-    <View style={styles.containerGeneral}>
-        <View style={styles.contenedor}>
-            <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('FilterScreen')}}>
-                <Text style={styles.buttonText}>Cambiar filtros</Text>
-            </TouchableOpacity>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {entrenamientos.map((entrenamiento) => (
-                    <View style={styles.tarjeta}>
-                        <View key={entrenamiento.id} style={styles.infoConFoto}>
-                            <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
-                            <View style={styles.infoTarjeta}>
-                                <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
-                                <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
-                                <TouchableOpacity style={styles.buttonVerMas} 
-                                // onPress={() => handleVerMas(entrenamiento.id)}
-                                onPress={() => { navigation.navigate('BigCardScreen')}}>
-                                    <Text style={styles.buttonVerMasText}>Ver más</Text>
-                                </TouchableOpacity>
+    const [entrenamientos, setEntrenamientos] = useState([]);
+
+    useEffect(() => {
+
+        const imprimirMensaje = async () => {
+            const { deporte, dificultad, edad, intensidad, objetivo, personas } = datos;
+            const deporteQuery = "deporte: " + '"' + deporte + '",';
+            const dificultadQuery = "dificultad: " + '"' + dificultad + '",';
+            const edadQuery = "edad: " + '' + edad + ',';
+            const intensidadQuery = "intensidad: " + '"' + intensidad + '",';
+            const objetivoQuery = "objetivo: " + '"' + objetivo + '",';
+            const personasQuery = "personas: " + '"' + personas + '",';
+
+            var finalQuery = "";
+            if (deporte != "Cualquiera") {
+                finalQuery += deporteQuery;
+            }
+            if (dificultad != "Cualquiera") {
+                finalQuery += dificultadQuery;
+            }
+            if (edad != "Cualquiera") {
+                finalQuery += edadQuery;
+            }
+            if (intensidad != "Cualquiera") {
+                finalQuery += intensidadQuery;
+            }
+            if (objetivo != "Cualquiera") {
+                finalQuery += objetivoQuery;
+            }
+            if (personas != "Cualquiera") {
+                finalQuery += personasQuery;
+            }
+            console.log(finalQuery);
+
+
+            const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
+            const filtro = `${encodeURIComponent(finalQuery)}`;
+
+            const url = `${baseUrl}/${filtro}`;
+            console.log('URL generada:', url);
+
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get(url);
+                    // console.log(response.data);
+                    setEntrenamientos(response.data);
+                    console.log(response.data)
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            fetchData();
+
+        };
+
+        imprimirMensaje();
+    }, []);
+
+    return (
+        <View style={styles.containerGeneral}>
+            <View style={styles.contenedor}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('FilterScreen') }}>
+                    <Text style={styles.buttonText}>Cambiar filtros</Text>
+                </TouchableOpacity>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {entrenamientos.map((entrenamiento) => (
+                        <View style={styles.tarjeta}>
+                            <View key={entrenamiento.id} style={styles.infoConFoto}>
+                                <Image source={{ uri: entrenamiento.img }} style={styles.foto} />
+                                <View style={styles.infoTarjeta}>
+                                    <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
+                                    <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
+                                    <TouchableOpacity style={styles.buttonVerMas}
+                                        onPress={() => { navigation.navigate('BigCardScreen', { nombre: entrenamiento.nombre }) }}>
+                                        <Text style={styles.buttonVerMasText}>Ver más</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
-                    </View>
 
-                ))}
-            </ScrollView>
+                    ))}
+                </ScrollView>
+            </View>
+
         </View>
-
-    </View>
-);
+    );
 
 }
 const styles = StyleSheet.create({
@@ -123,25 +142,20 @@ const styles = StyleSheet.create({
     nombre: {
         width: '95%',
         marginLeft: '5%',
-        height: '15%',
+        height: '20%',
         textAlign: 'center',
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 20,
     },
-    _descripcion: {
+    descripcion: {
         width: '95%',
         marginLeft: '5%',
-        height: '55%',
+        height: '49%',
         textAlign: 'auto',
         marginTop: '2%',
         color: 'white',
-    },
-    get descripcion() {
-        return this._descripcion;
-    },
-    set descripcion(value) {
-        this._descripcion = value;
+        fontSize: 16
     },
     button: {
         width: '100%',

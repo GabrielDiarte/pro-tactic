@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -6,47 +6,99 @@ import { useNavigation } from '@react-navigation/native';
 const LoginScreen = () => {
   const navigation = useNavigation();
 
+  const [usuario, setUsuario] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorLogin, setErrorLogin] = useState(false);
+
+  // useEffect(() => {
+  //   if (usuario && usuario.length > 0) {
+  //     navigation.navigate('SliderScreen');
+  //   } else {
+  //     setErrorLogin(true);
+  //   }
+  // }, [usuario, navigation]);
+
+
+  const fetchData = async () => {
+    const emailQuery = "mail: " + '"' + email + '",';
+    const passQuery = "pass: " + '"' + password + '",';
+    const finalQuery = emailQuery + passQuery;
+
+    const baseUrl = 'http://192.168.1.102:3000/exercises/users';
+    const filtro = `${encodeURIComponent(finalQuery)}`;
+
+    const url = `${baseUrl}/${filtro}`;
+    console.log('URL buscar usuarios:', url);
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('Respuesta:', data);
+      setUsuario(data);
+    } catch (error) {
+      console.error(error);
+    }
+    if (usuario && usuario.length > 0) {
+      console.log("Esto va hulio");
+      setErrorLogin(false);
+      navigation.navigate('SliderScreen');
+    } else {
+      console.log("Espabila socio");
+      setErrorLogin(true);
+    }
+
+  };
 
   const submit = () => {
     console.log('Email:', email, 'Password:', password);
-    navigation.navigate('SliderScreen')
+    fetchData();
   };
 
   return (
     <View style={styles.container}>
-        <Image source={require('../logos/silbato-fondo.jpg')} style={styles.image} />
+      <Image source={require('../logos/silbato-fondo.jpg')} style={styles.image} />
       <Text style={styles.title}>Pro-Tactic</Text>
       <TextInput
-        style={styles.input}
+        style={errorLogin ? styles.inputError : styles.input}
         placeholder="Email"
         placeholderTextColor="#000000"
         value={email}
         onChangeText={text => setEmail(text)}
       />
       <TextInput
-        style={styles.input}
+        style={errorLogin ? styles.inputError : styles.input}
         placeholder="Contraseña"
         placeholderTextColor="#000000"
         secureTextEntry
         value={password}
         onChangeText={text => setPassword(text)}
       />
-
+      <View style={styles.containerError}>
+        {errorLogin && (
+          <Text style={styles.textoError}>Email o contraseña incorrectos</Text>
+        )}
+      </View>
       <Text style={styles.subtitle}>¿Olvidaste tu contraseña?</Text>
 
       <TouchableOpacity style={styles.button} onPress={submit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <Text style={styles.subtitle}>¿Nuevo en ProTactic?<Text style={styles.subtitleYellow} onPress={() => { navigation.navigate('CreateAccountScreen') }}>
-        Crea una cuenta
-      </Text>
+      <Text style={styles.subtitle}>
+        ¿Nuevo en ProTactic?
+        <Text
+          style={styles.subtitleYellow}
+          onPress={() => {
+            navigation.navigate('CreateAccountScreen');
+          }}>
+          Crea una cuenta
+        </Text>
       </Text>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -65,6 +117,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  textoError: {
+    fontSize: 15,
+    color: 'red',
+    fontWeight: 'bold',
+    textAlign: 'left'
+  },
   subtitle: {
     fontSize: 12,
     fontWeight: 'bold',
@@ -75,11 +133,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FAC710',
   },
+  containerError:{
+    width: '100%',
+    height: 40,
+    marginTop: -10,
+  },
   input: {
     width: '100%',
     height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  inputError: {
+    width: '100%',
+    height: 50,
+    borderWidth: 3,
+    borderColor: 'red',
+    backgroundColor: '#FFCCCC',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,

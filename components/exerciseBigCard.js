@@ -38,7 +38,9 @@ function ExerciseBigCard() {
         fontSize: 25,
     };
     const medio = {
-        color: 'yellow'
+        color: '#FAC710',
+        
+        fontSize: 25,
     };
     const alto = {
         color: 'red',
@@ -55,7 +57,7 @@ function ExerciseBigCard() {
                                 <Text style={styles.tituloTexto}>{entrenamiento.nombre}</Text>
                             </View>
                             <View style={styles.fotoContainer}>
-                                <Image source={require('../fotos/futbol/posesion.jpg')} style={styles.foto} />
+                                <Image source={{ uri: entrenamiento.img }} style={styles.foto} />
                             </View>
                             <View style={styles.descripcionContainer}>
                                 <Text style={styles.tituloDescripcion}>Atributos</Text>

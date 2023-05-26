@@ -57,6 +57,7 @@ function PruebaBD() {
                 const response = await axios.get(url);
                 // console.log(response.data);
                 setEntrenamientos(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.error(error);
             }
@@ -76,7 +77,7 @@ function PruebaBD() {
                     {entrenamientos.map((entrenamiento) => (
                         <View style={styles.tarjeta} onPress={() => imprimirMensaje}>
                             <View style={styles.infoConFoto}>
-                                <Image source={{ uri: entrenamiento.imagen }} style={styles.foto} />
+                                <Image source={{ uri: entrenamiento.img }} style={styles.foto} />
 
                                 <View style={styles.infoTarjeta}>
                                     <Text style={styles.nombre}>{entrenamiento.deporte}</Text>
