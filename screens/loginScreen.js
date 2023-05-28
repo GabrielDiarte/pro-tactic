@@ -11,13 +11,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [errorLogin, setErrorLogin] = useState(false);
 
-  // useEffect(() => {
-  //   if (usuario && usuario.length > 0) {
-  //     navigation.navigate('SliderScreen');
-  //   } else {
-  //     setErrorLogin(true);
-  //   }
-  // }, [usuario, navigation]);
+
 
 
   const fetchData = async () => {
@@ -35,17 +29,16 @@ const LoginScreen = () => {
       const response = await fetch(url);
       const data = await response.json();
       console.log('Respuesta:', data);
-      setUsuario(data);
+      const updatedUsuario = data;
+      setUsuario(updatedUsuario);
+      if (updatedUsuario && updatedUsuario.length > 0) {
+        setErrorLogin(false);
+        navigation.navigate('SliderScreen');
+      } else {
+        setErrorLogin(true);
+      }
     } catch (error) {
       console.error(error);
-    }
-    if (usuario && usuario.length > 0) {
-      console.log("Esto va hulio");
-      setErrorLogin(false);
-      navigation.navigate('SliderScreen');
-    } else {
-      console.log("Espabila socio");
-      setErrorLogin(true);
     }
 
   };
