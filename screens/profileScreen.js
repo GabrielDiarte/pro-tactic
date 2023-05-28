@@ -1,74 +1,79 @@
 import React, { useState, useEffect }from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = () => {
-
-    const [usuario, setUsuario] = useState([]);
-
-
+    const navigation = useNavigation();
+    const [usuario, setUsuario] = useState({});
+  
     useEffect(() => {
-        const fetchData = async () => {
-            const nombreQuery = "nombre: " + '"' + nombre + '",';
-
-            const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
-            const filtro = `${encodeURIComponent(nombreQuery)}`;
-
-            const url = `${baseUrl}/${nombreQuery}`;
-            console.log('URL generada parte 2:', url);
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log('Respuesta:', data); // Mostrar respuesta en la consola
-                setEntrenamientosIndividual(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchData();
+      const getUserFromStorage = async () => {
+        try {
+          const usuarioGuardadoString = await AsyncStorage.getItem('usuario');
+          const usuarioGuardado = JSON.parse(usuarioGuardadoString);
+          console.log('Usuario guardado:', usuarioGuardado);
+            setUsuario(usuarioGuardado[0]);
+          
+          // Realiza las acciones necesarias con los datos del usuario
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      getUserFromStorage();
     }, []);
 
+    const logout = async () => {
+        try {
+          await AsyncStorage.removeItem('usuario');
+          console.log('Sesion cerrada correctamente');
+          navigation.navigate('LoginScreen');
+          // Realiza las acciones necesarias después de borrar el AsyncStorage
+        } catch (error) {
+          console.error('Error al cerrar sesion:', error);
+        }
+      };
+  
     return (
-        <View style={styles.containerGeneral}>
-            <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
-                <Image source={require('../logos/backArrow.png')} style={styles.backArrow} />
-            </TouchableOpacity>
-            <View style={{ alignItems: "center" }}>
-                <Image source={require('../logos/usuario.png')} style={styles.image} />
-            </View>
-            <View style={styles.lineaSeparadora}></View>
-            <View style={styles.infoUsuarioGeneral}>
-                <View style={styles.infoUsuario}>
-                    <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
-                    <Text style={styles.infoUsuarioTexto}>Laura</Text>
-                </View >
-                <View style={styles.infoUsuario}>
-                    <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
-                    <Text style={styles.infoUsuarioTexto}>García Fernández</Text>
-                </View>
-                <View style={styles.infoUsuario}>
-                    <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
-                    <Text style={styles.infoUsuarioTexto}>lauragar@gmail.com</Text>
-                </View>
-                <View style={styles.infoUsuario}>
-                    <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
-                    <Text style={styles.infoUsuarioTexto}>Nunca digas nunca!! 😜</Text>
-                </View>
-
-            </View>
-            <View style={styles.botones}>
-                <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>CAMBIAR PLAN</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>CERRAR SESION</Text>
-                </TouchableOpacity>
-            </View>
-
-
+      <View style={styles.containerGeneral}>
+        <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
+          <Image source={require('../logos/backArrow.png')} style={styles.backArrow} />
+        </TouchableOpacity>
+        <View style={{ alignItems: "center" }}>
+          <Image source={require('../logos/usuario.png')} style={styles.image} />
         </View>
+        <View style={styles.lineaSeparadora}></View>
+        <View style={styles.infoUsuarioGeneral}>
+          <View style={styles.infoUsuario}>
+            <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
+            <Text style={styles.infoUsuarioTexto}>{usuario.nombre}</Text>
+          </View>
+          <View style={styles.infoUsuario}>
+            <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
+            <Text style={styles.infoUsuarioTexto}>{usuario.apellidos}</Text>
+          </View>
+          <View style={styles.infoUsuario}>
+            <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
+            <Text style={styles.infoUsuarioTexto}>{usuario.mail}</Text>
+          </View>
+          <View style={styles.infoUsuario}>
+            <Image source={require('../logos/edit.png')} style={styles.imageInfoUsuario} />
+            <Text style={styles.infoUsuarioTexto}>{usuario.frase}</Text>
+          </View>
+        </View>
+        <View style={styles.botones}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>CAMBIAR PLAN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={logout}>
+            <Text style={styles.buttonText}>CERRAR SESION</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
-};
+  };
 
 const styles = StyleSheet.create({
     backArrow: {
@@ -109,10 +114,9 @@ const styles = StyleSheet.create({
         height: 55,
     },
     infoUsuarioTexto: {
-        fontSize: 25,
+        fontSize: 18,
         marginLeft: 10,
         marginRight: '25%',
-        fontWeight: 'bold',
         color: 'white'
     },
     botones: {

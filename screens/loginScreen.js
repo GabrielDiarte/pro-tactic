@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +32,9 @@ const LoginScreen = () => {
       const data = await response.json();
       console.log('Respuesta:', data);
       const updatedUsuario = data;
+      await AsyncStorage.setItem('usuario', JSON.stringify(data));
       setUsuario(updatedUsuario);
+      
       if (updatedUsuario && updatedUsuario.length > 0) {
         setErrorLogin(false);
         navigation.navigate('SliderScreen');
