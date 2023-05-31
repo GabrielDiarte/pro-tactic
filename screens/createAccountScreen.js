@@ -40,11 +40,9 @@ const CreateAccountScreen = () => {
 
   const comprobarUsuario = async () => {
     const emailQuery = "mail: " + '"' + email + '",';
-    const passQuery = "pass: " + '"' + password + '",';
-    const finalQuery = emailQuery + passQuery;
 
     const baseUrl = 'http://192.168.1.102:3000/exercises/users';
-    const filtro = `${encodeURIComponent(finalQuery)}`;
+    const filtro = `${encodeURIComponent(emailQuery)}`;
 
     const url = `${baseUrl}/${filtro}`;
     console.log('URL buscar usuarios:', url);
