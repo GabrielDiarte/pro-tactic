@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const PlanScreen = () => {
-
+    const navigation = useNavigation();
 
     const [selected, setSelected] = useState('');
 
@@ -31,7 +32,7 @@ const PlanScreen = () => {
 
     return (
         <View style={styles.containerGeneral}>
-            <TouchableOpacity style={styles.backArrow}>
+            <TouchableOpacity style={styles.backArrow} onPress={() => navigation.goBack()}>
                 <Image source={require('../logos/backArrow.png')} style={styles.backArrow} />
             </TouchableOpacity>
 

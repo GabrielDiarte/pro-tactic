@@ -38,7 +38,7 @@ const ProfileScreen = () => {
   
     return (
       <View style={styles.containerGeneral}>
-        <TouchableOpacity style={styles.backArrow} onPress={console.log('Esto no va a ningun lado jefe')}>
+        <TouchableOpacity style={styles.backArrow} onPress={() => navigation.goBack()}>
           <Image source={require('../logos/backArrow.png')} style={styles.backArrow} />
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
@@ -64,7 +64,7 @@ const ProfileScreen = () => {
           </View>
         </View>
         <View style={styles.botones}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('PlanScreen')}>
             <Text style={styles.buttonText}>CAMBIAR PLAN</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={logout}>
