@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     contenedor: {
         flex: 1,
         width: '90%',
-        marginBottom: 110,
+        marginBottom: 87,
         alignSelf: 'center',
     },
     tarjetaSlider: {

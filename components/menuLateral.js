@@ -1,7 +1,9 @@
 import React from 'react';
 import { Image, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function MenuLateral() {
+    const navigation = useNavigation();
     return (
         <View style={styles.contenedorMenuLateral}>
             <View style={styles.menuLateral}>
@@ -22,9 +24,9 @@ function MenuLateral() {
                     <Image source={require('../logos/usuario.png')} style={styles.imagenBotonMenuLateral} />
                     <Text style={styles.textoMenuLateral}>Amigos</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuLateral}>
-                    <Image source={require('../logos/nuevo.png')} style={styles.imagenBotonMenuLateral} />
-                    <Text style={styles.textoMenuLateral}>Crear ejercicio (proximamente)</Text>
+                <TouchableOpacity style={styles.botonMenuLateral} onPress={() => { navigation.navigate('CreateExerciseScreen')}}>
+                    <Image source={require('../logos/nuevo.png')} style={styles.imagenBotonMenuLateral}  />
+                    <Text style={styles.textoMenuLateral}>Crear ejercicio</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botonMenuLateral}>
                     <Image source={require('../logos/ajustes.png')} style={styles.imagenBotonMenuLateral} />

@@ -17,6 +17,7 @@ import FilterComponent from './components/filter';
 import SliderComponentScreen from './components/slider';
 import UserList from './components/userList';
 import TrainingList from './components/trainingList';
+import CreateExerciseScreen from './components/insertExercise';
 
 // Imports de menus
 import MenuInferior from './menuAbajo';
@@ -59,6 +60,7 @@ const CustomNavigationContainer = () => {
         <Stack.Screen name="PlanScreen" component={PlanScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 
+        <Stack.Screen name="CreateExerciseScreen" component={CreateExerciseScreen} />
         <Stack.Screen name="BigCardScreen" component={ExerciseBigCard} />
         <Stack.Screen name="FilterScreen" component={FilterComponent} />
         <Stack.Screen name="SliderScreen" component={SliderComponentScreen} />

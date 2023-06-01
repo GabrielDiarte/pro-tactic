@@ -48,7 +48,7 @@ function TrainingList() {
 
 
             const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
-            const filtro = `${encodeURIComponent(finalQuery)}`;
+            const filtro = `${finalQuery}`;
 
             const url = `${baseUrl}/${filtro}`;
             console.log('URL generada:', url);
