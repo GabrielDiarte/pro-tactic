@@ -1,17 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PlanScreen = () => {
     const navigation = useNavigation();
 
+    const [planes, setPlanes] = useState([]);
     const [selected, setSelected] = useState('');
+    const [usuario, setUsuario] = useState({});
 
-    const submit = (plan) => {
-        setSelected(plan)
-        console.log("Has elegido el plan " + plan)
-        
+    useEffect(() => {
+        const fetchData = async () => {
+            const baseUrl = 'http://192.168.1.102:3000/exercises/planes';
+            console.log('URL planes:', baseUrl);
+            try {
+                const response = await fetch(baseUrl);
+                const data = await response.json();
+                console.log('Todos los planes:', data); // Mostrar respuesta en la consola
+                setPlanes(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const getUserFromStorage = async () => {
+            try {
+              const usuarioGuardadoString = await AsyncStorage.getItem('usuario');
+              const usuarioGuardado = JSON.parse(usuarioGuardadoString);
+              console.log('Usuario guardado:', usuarioGuardado[0].plan);
+              setSelected(usuarioGuardado[0].plan);
+              
+              // Realiza las acciones necesarias con los datos del usuario
+            } catch (error) {
+              console.error(error);
+            }
+          };
+      
+          
+
+        fetchData();
+        getUserFromStorage();
+    }, []);
+
+
+
+
+    const submit = (valorPlan) => {
+        const planSeleccionado = valorPlan.valorPlan;
+        setSelected(planSeleccionado);
+        console.log("Has elegido el plan " + planSeleccionado);
     };
+
+
 
     const valorNormal = {
         width: '100%',
@@ -38,50 +79,28 @@ const PlanScreen = () => {
 
             <View style={styles.container}>
                 <View style={styles.planes}>
-                    <TouchableOpacity style={styles.planesTarjeta } onPress = {() => submit('basico')}>
-                        <View style={selected === 'basico' ? valorSeleccionado : valorNormal } >
-                            <Text style={styles.titulo}>Plan Básico</Text>
-                            <Text style={styles.precio}>Gratis</Text>
-                        </View>
-                        <View style={styles.descripcionPlan}>
-                            <Text style={styles.descripcionPlanText}>
-                                El plan Básico que permite a los usuarios visualizar diferentes ejercicios.
-                                Además, podrán seguir a otros usuarios y ver sus actividades.
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    {planes.map((planesMap, index) => (
+                        <TouchableOpacity
+                            style={styles.planesTarjeta}
+                            onPress={() => submit({ valorPlan: planesMap.plan })}
+                            key={index}>
+                            <View style={planesMap.plan === selected ? valorSeleccionado : valorNormal}>
+                                <Text style={styles.titulo}>Plan {planesMap.plan}</Text>
+                                <Text style={styles.precio}>{planesMap.price}</Text>
+                            </View>
+                            <View style={styles.descripcionPlan}>
+                                <Text style={styles.descripcionPlanText}>
+                                {planesMap.descripcion}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
 
-                    <TouchableOpacity style={styles.planesTarjeta } onPress = {() => submit('medium')}>
-                        <View style={selected === 'medium' ? valorSeleccionado : valorNormal }>
-                            <Text style={styles.titulo}>Plan Medium</Text>
-                            <Text style={styles.precio}>3.99€</Text>
-                        </View>
-                        <View style={styles.descripcionPlan}>
-                            <Text style={styles.descripcionPlanText}>
-                                El plan Medium ofrece a los usuarios poder ver TODOS los
-                                ejercicios que la aplicación ofrece. Además de esto, se elimina completamente
-                                la publicidad.
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity  style={styles.planesTarjeta } onPress = {() => submit('pro')}>
-                        <View style={selected === 'pro' ? valorSeleccionado : valorNormal }>
-                            <Text style={styles.titulo}>Plan Pro</Text>
-                            <Text style={styles.precio}>6.99€</Text>
-                        </View>
-                        <View style={styles.descripcionPlan}>
-                            <Text style={styles.descripcionPlanText}>
-                                El plan Pro dispone de todas las ventajas anteriores,
-                                añadiendo la funcionalidad de comentar y valorar los ejercicios.
-                                Además, permite crear ejercicios para aportar más información a la app.
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
                 </View>
                 <View style={styles.botones}>
-                <TouchableOpacity style={styles.button} >
-                            <Text style={styles.buttonText}>ELEGIR PLAN</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} >
+                        <Text style={styles.buttonText}>ELEGIR PLAN</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -124,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-   
+
     titulo: {
         textAlign: 'left',
         color: '#FAC710',

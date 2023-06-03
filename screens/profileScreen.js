@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     lineaSeparadora: {
         width: '100%',
-        height: '1.5%',
+        height: '1%',
         marginVertical: 20,
         backgroundColor: '#FAC710'
     },
