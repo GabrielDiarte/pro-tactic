@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ScrollView
 import { Picker as PickerRN } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const opcionesCampo1 = ['Futbol', 'Basket'];
 const opcionesCampo2 = ['Low', 'Medium', 'Hard'];
@@ -27,6 +28,19 @@ const CreateExerciseScreen = () => {
     const [descripcionError, setDescripcionError] = useState(false);
     const [ejercicioExistente, setEjercicioExistente] = useState(false);
 
+    const [plan, setPlan] = useState("");
+
+    const getUserFromStorage = async () => {
+        try {
+          const usuarioGuardadoString = await AsyncStorage.getItem('usuario');
+          const usuarioGuardado = JSON.parse(usuarioGuardadoString);
+          setPlan(usuarioGuardado[0].plan);
+          // Realiza las acciones necesarias con los datos del usuario
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
     const submit = async () => {
         if (name === "") {
             setNameError(true);
@@ -43,7 +57,7 @@ const CreateExerciseScreen = () => {
     };
 
     useEffect(() => {
-
+        getUserFromStorage();
         if (name !== "" && description !== "" && !ejercicioExistente) {
             createExercise();
         }
@@ -61,10 +75,10 @@ const CreateExerciseScreen = () => {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            console.log('Respuesta:', data);
-            const checkExercise = data;
+            const checkExercise = JSON.stringify(data);
+            console.log('Respuesta:'+ checkExercise+":Respuesta");
 
-            if (checkExercise && checkExercise.length > 0) {
+            if (checkExercise !== "[]") {
                 setEjercicioExistente(true);
             } else {
                 setEjercicioExistente(false);
@@ -90,6 +104,7 @@ const CreateExerciseScreen = () => {
     };
 
     return (
+        <View style={styles.containerGrande}>
         <ScrollView >
             <View style={styles.container}>
                 <Text style={styles.tituloTexto}>CREAR EJERCICIO</Text>
@@ -204,80 +219,134 @@ const CreateExerciseScreen = () => {
                 </TouchableOpacity>
             </View>
         </ScrollView>
+              {plan !== 'Pro' && (
+                <View style={styles.overlayContainer}>
+                  <Text style={styles.overlayText}>¡Este contenido solo está disponible para usuarios Pro!</Text>
+                </View>
+              )}
+              </View>
     );
 };
 
 const styles = StyleSheet.create({
+    containerGrande: {
+      flex: 1,
+    },
     container: {
-        flex: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 20,
+      flex: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 20,
     },
     tituloTexto: {
-        marginVertical: 10,
-        fontSize: 30,
-        fontWeight: 'bold'
+      marginVertical: 10,
+      fontSize: 30,
+      fontWeight: 'bold'
     },
     input: {
-        width: '100%',
-        height: 40,
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-        paddingHorizontal: 10,
+      width: '100%',
+      height: 40,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 5,
+      paddingHorizontal: 10,
     },
     inputError: {
-        width: '100%',
-        height: 40,
-        borderWidth: 3,
-        borderColor: 'red',
-        backgroundColor: '#FFCCCC',
-        borderRadius: 5,
-        paddingHorizontal: 10,
+      width: '100%',
+      height: 40,
+      borderWidth: 3,
+      borderColor: 'red',
+      backgroundColor: '#FFCCCC',
+      borderRadius: 5,
+      paddingHorizontal: 10,
     },
     textoError: {
-        fontSize: 15,
-        color: 'red',
-        fontWeight: 'bold',
-        textAlign: 'left'
+      fontSize: 15,
+      color: 'red',
+      fontWeight: 'bold',
+      textAlign: 'left'
     },
     containerError: {
-        width: '100%',
-        height: 25,
-        justifyContent: 'center',
-        textAlign: 'left'
+      width: '100%',
+      height: 25,
+      justifyContent: 'center',
+      textAlign: 'left'
     },
     pickerWrapper: {
-        width: '100%',
-        marginBottom: 10,
+      width: '100%',
+      marginBottom: 10,
     },
     pickerTitle: {
-        marginBottom: 5,
+      marginBottom: 5,
     },
     pickerContainer: {
-        width: '100%',
-        height: 40,
-        borderWidth: 1,
-        borderColor: 'gray',
-        justifyContent: 'center',
-        borderRadius: 5,
-        paddingHorizontal: 10,
+      width: '100%',
+      height: 40,
+      borderWidth: 1,
+      borderColor: 'gray',
+      justifyContent: 'center',
+      borderRadius: 5,
+      paddingHorizontal: 10,
     },
     button: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#FAC710',
-        borderRadius: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-
+      width: '100%',
+      height: 50,
+      backgroundColor: '#FAC710',
+      borderRadius: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     buttonText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#000000',
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#000000',
     },
-});
-
-export default CreateExerciseScreen;
+  
+    // Estilos de la pantalla de aviso
+    overlayContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    overlayText: {
+      fontSize: 18,
+      color: 'white',
+      textAlign: 'center',
+      paddingHorizontal: 20,
+    },
+  
+    // Estilos del modal
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderRadius: 8,
+    },
+    modalText: {
+      fontSize: 18,
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    modalButton: {
+      backgroundColor: 'blue',
+      padding: 10,
+      borderRadius: 8,
+    },
+    modalButtonText: {
+      color: 'white',
+      fontSize: 16,
+      textAlign: 'center',
+    },
+  });
+  
+  export default CreateExerciseScreen;
