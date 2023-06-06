@@ -84,7 +84,7 @@ function ExerciseBigCard() {
                                 </View>
                                 <Text style={styles.tituloDescripcion}>Descripción</Text>
                                 <Text style={styles.descripcionTexto}>{entrenamiento.descripcion}</Text>
-                                <Text style={styles.tituloDescripcion}>Material necesario</Text>
+                                {/* <Text style={styles.tituloDescripcion}>Material necesario</Text>
                                 <View style={styles.materialNecesarioContainer}>
                                     {entrenamiento.material.map((material, index) => (
                                         <View key={index} style={styles.materialContainerIndividual}>
@@ -92,7 +92,7 @@ function ExerciseBigCard() {
                                         </View>
                                     ))}
 
-                                </View>
+                                </View> */}
                             </View>
                         </View>
                     ))}

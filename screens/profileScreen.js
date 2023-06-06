@@ -9,6 +9,21 @@ const ProfileScreen = () => {
   const [usuario, setUsuario] = useState({});
   const [editar, setEditar] = useState(false);
 
+  const [nombre, setNombre] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [estado, setEstado] = useState("");
+  const [pass, setPass] = useState("");
+
+  const [initialNombre, setInitialNombre] = useState("");
+  const [initialApellidos, setInitialApellidos] = useState("");
+  const [initialEstado, setInitialEstado] = useState("");
+  const [initialPass, setInitialPass] = useState("");
+
+  const [editarNombre, setEditarNombre] = useState(false);
+  const [editarApellidos, setEditarApellidos] = useState(false);
+  const [editarEstado, setEditarEstado] = useState(false);
+  const [editarPass, setEditarPass] = useState(false);
+
   useEffect(() => {
     const getUserFromStorage = async () => {
       try {
@@ -16,6 +31,15 @@ const ProfileScreen = () => {
         const usuarioGuardado = JSON.parse(usuarioGuardadoString);
         console.log('Usuario guardado:', usuarioGuardado);
         setUsuario(usuarioGuardado[0]);
+        setNombre(usuario.nombre);
+        setApellidos(usuario.apellidos);
+        setEstado(usuario.estado);
+        setPass(usuario.pass);
+
+        setInitialNombre(usuario.nombre);
+        setInitialApellidos(usuario.apellidos);
+        setInitialEstado(usuario.estado);
+        setInitialPass(usuario.pass);
 
         // Realiza las acciones necesarias con los datos del usuario
       } catch (error) {
@@ -25,6 +49,52 @@ const ProfileScreen = () => {
 
     getUserFromStorage();
   }, []);
+
+  const editarUsuario = async () => {
+    console.log("Nombre: " + usuario.nombre);
+    console.log("Apellidos: " + usuario.apellidos);
+    console.log("Mail: " + usuario.mail);
+    console.log("Estado: " + usuario.frase);
+    console.log("Pass: " + usuario.pass);
+    console.log("usuario: " + JSON.stringify(usuario));
+
+    const baseUrl = 'http://192.168.1.102:3000/updateUser/users';
+    const filtro = `${usuario.mail}/${usuario.nombre}/${usuario.apellidos}/${usuario.frase}/${usuario.pass}`;
+    const url = `${baseUrl}/${filtro}`;
+
+    console.log(url);
+
+    try {
+      const response = await fetch(url, { method: 'PUT' });
+      console.log('Usuario actualizado correctamente');
+      await AsyncStorage.removeItem('usuario');
+      await AsyncStorage.setItem('usuario', JSON.stringify([usuario]));
+      setUsuario(usuario);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setEditarNombre(false);
+    setEditarApellidos(false);
+    setEditarEstado(false);
+    setEditarPass(false);
+
+  };
+
+  const cancelarEditar = async () => {
+    setEditarNombre(false);
+    setEditarApellidos(false);
+    setEditarEstado(false);
+    setEditarPass(false);
+
+    setNombre(usuario.nombre);
+    setApellidos(usuario.apellidos);
+    setEstado(usuario.estado);
+    setPass(usuario.pass);
+
+    setUsuario({ ...usuario, nombre: initialNombre, apellidos: initialApellidos, estado: initialEstado, pass: initialPass });
+  };
+
 
   const logout = async () => {
     try {
@@ -48,8 +118,13 @@ const ProfileScreen = () => {
       <View style={styles.lineaSeparadora}></View>
       <View style={styles.infoUsuarioGeneral}>
         <View style={styles.infoUsuario}>
+        {!editarNombre ? (
+          <TouchableOpacity onPress={() => setEditarNombre(true)}>
+            <Image source={require('../logos/edit.png')} style={styles.imageEdit} />
+          </TouchableOpacity>
+            ) : (null)}
           <Text style={styles.infoUsuarioTextoCabecera}>Nombre:</Text>
-          {editar ? (
+          {editarNombre ? (
             <TextInput
               style={styles.infoUsuarioEditar}
               value={usuario.nombre}
@@ -62,8 +137,13 @@ const ProfileScreen = () => {
           )}
         </View>
         <View style={styles.infoUsuario}>
+        {!editarApellidos ? (
+          <TouchableOpacity onPress={() => setEditarApellidos(true)}>
+            <Image source={require('../logos/edit.png')} style={styles.imageEdit} />
+          </TouchableOpacity>
+            ) : (null)}
           <Text style={styles.infoUsuarioTextoCabecera}>Apellidos:</Text>
-          {editar ? (
+          {editarApellidos ? (
             <TextInput
               style={styles.infoUsuarioEditar}
               value={usuario.apellidos}
@@ -76,8 +156,13 @@ const ProfileScreen = () => {
           )}
         </View>
         <View style={styles.infoUsuario}>
+          {!editarEstado ? (
+          <TouchableOpacity onPress={() => setEditarEstado(true)}>
+            <Image source={require('../logos/edit.png')} style={styles.imageEdit} />
+          </TouchableOpacity>
+            ) : (null)}
           <Text style={styles.infoUsuarioTextoCabecera}>Estado:</Text>
-          {editar ? (
+          {editarEstado ? (
             <TextInput
               style={styles.infoUsuarioEditar}
               value={usuario.frase}
@@ -91,32 +176,44 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.infoUsuario}>
           <Text style={styles.infoUsuarioTextoCabecera}>Mail:</Text>
-          {editar ? (
-            <TextInput
-              style={styles.infoUsuarioEditar}
-              value={usuario.mail}
-              onChangeText={(text) => {
-                setUsuario({ ...usuario, mail: text });
-              }}
-            />
-          ) : (
-            <Text style={styles.infoUsuarioTexto}>{usuario.mail}</Text>
-          )}
+          <Text style={styles.infoUsuarioTexto}>{usuario.mail}</Text>
         </View>
+
         <View style={styles.infoUsuario}>
+          {!editarPass ? (
+          <TouchableOpacity onPress={() => setEditarPass(true)}>
+            <Image source={require('../logos/edit.png')} style={styles.imageEdit} />
+          </TouchableOpacity>
+            ) : (null)}
           <Text style={styles.infoUsuarioTextoCabecera}>Contraseña:</Text>
-          {editar ? (
+          {editarPass ? (
             <TextInput
               style={styles.infoUsuarioEditar}
-              value={usuario.pass}
-              onChangeText={(text) => {
-                setUsuario({ ...usuario, pass: text });
-              }}
+              secureTextEntry
             />
           ) : (
-            <Text style={styles.infoUsuarioTexto}>{usuario.pass}</Text>
+            <Text style={styles.infoUsuarioTexto}>********</Text>
           )}
         </View>
+
+        {editarPass ? (
+          <View style={styles.infoUsuario}>
+            <TouchableOpacity onPress={() => setEditarPass(true)}>
+            </TouchableOpacity>
+            <Text style={styles.infoUsuarioTextoCabecera}>Nueva contraseña:</Text>
+            <TextInput style={styles.infoUsuarioEditar} secureTextEntry />
+          </View>
+        ) : (null)}
+
+        {editarPass ? (
+          <View style={styles.infoUsuario}>
+            <TouchableOpacity onPress={() => setEditarPass(true)}>
+            </TouchableOpacity>
+            <Text style={styles.infoUsuarioTextoCabecera}>Repetir contraseña:</Text>
+            <TextInput style={styles.infoUsuarioEditar} secureTextEntry />
+          </View>
+        ) : (null)}
+
         <View style={styles.infoUsuario}>
           <Text style={styles.infoUsuarioTextoCabecera}>Plan:</Text>
           <Text style={styles.infoUsuarioTexto}>{usuario.plan}</Text>
@@ -124,16 +221,12 @@ const ProfileScreen = () => {
       </View>
 
       <View style={styles.botones}>
-        {!editar ? (
+        {!editarNombre && !editarApellidos && !editarEstado && !editarPass ? (
           <View style={styles.botones}>
-            <View style={styles.botonesDoble}>
-              <TouchableOpacity style={styles.buttonDoble} onPress={() => setEditar(true)}>
-                <Text style={styles.buttonText}>EDITAR</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonDoble} onPress={() => navigation.navigate('PlanScreen')}>
+
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PlanScreen')}>
                 <Text style={styles.buttonText}>CAMBIAR PLAN</Text>
               </TouchableOpacity>
-            </View>
             <TouchableOpacity style={styles.button} onPress={logout}>
               <Text style={styles.buttonText}>CERRAR SESION</Text>
             </TouchableOpacity>
@@ -141,10 +234,10 @@ const ProfileScreen = () => {
         ) : (
           <View style={styles.botones}>
             <View style={styles.botonesDoble}>
-              <TouchableOpacity style={styles.buttonDoble}>
+              <TouchableOpacity style={styles.buttonDoble} onPress={() => editarUsuario()}>
                 <Text style={styles.buttonText}>GUARDAR</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonDoble} onPress={() => setEditar(false)}>
+              <TouchableOpacity style={styles.buttonDoble} onPress={() => cancelarEditar()}>
                 <Text style={styles.buttonText}>CANCELAR</Text>
               </TouchableOpacity>
             </View>
@@ -175,6 +268,10 @@ const styles = StyleSheet.create({
     width: 225,
     height: 225,
   },
+  imageEdit: {
+    width: 40,
+    height: 40,
+  },
   lineaSeparadora: {
     width: '100%',
     height: '1%',
@@ -197,7 +294,7 @@ const styles = StyleSheet.create({
     height: 55,
   },
   infoUsuarioTextoCabecera: {
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
     color: 'white',
