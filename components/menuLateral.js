@@ -1,9 +1,23 @@
 import React from 'react';
 import { Image, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function MenuLateral() {
     const navigation = useNavigation();
+
+    const logout = async () => {
+        try {
+          await AsyncStorage.removeItem('usuario');
+          console.log('Sesion cerrada correctamente');
+          navigation.navigate('LoginScreen');
+          // Realiza las acciones necesarias después de borrar el AsyncStorage
+        } catch (error) {
+          console.error('Error al cerrar sesion:', error);
+        }
+      };
+
+
     return (
         <View style={styles.contenedorMenuLateral}>
             <View style={styles.menuLateral}>
@@ -16,11 +30,11 @@ function MenuLateral() {
                     <Image source={require('../logos/basket.png')} style={styles.imagenBotonMenuLateral} />
                     <Text style={styles.textoMenuLateral}>Baloncesto</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuLateral}>
+                <TouchableOpacity style={styles.botonMenuLateral}  onPress={() => { navigation.navigate('PlanScreen')}}>
                     <Image source={require('../logos/change.png')} style={styles.imagenBotonMenuLateral} />
                     <Text style={styles.textoMenuLateral}>Cambiar plan</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuLateral}>
+                <TouchableOpacity style={styles.botonMenuLateral}  onPress={() => { navigation.navigate('UserListScreen')}}>
                     <Image source={require('../logos/usuario.png')} style={styles.imagenBotonMenuLateral} />
                     <Text style={styles.textoMenuLateral}>Amigos</Text>
                 </TouchableOpacity>
@@ -28,12 +42,8 @@ function MenuLateral() {
                     <Image source={require('../logos/nuevo.png')} style={styles.imagenBotonMenuLateral}  />
                     <Text style={styles.textoMenuLateral}>Crear ejercicio</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuLateral}>
-                    <Image source={require('../logos/ajustes.png')} style={styles.imagenBotonMenuLateral} />
-                    <Text style={styles.textoMenuLateral}>Ajustes</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonCerrarSesion}>
+                <TouchableOpacity style={styles.buttonCerrarSesion} onPress={() => { logout()}}>
                     <Text style={styles.buttonCerrarSesionText}>CERRAR SESIÓN</Text>
                 </TouchableOpacity>
                 
