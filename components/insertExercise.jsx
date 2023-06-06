@@ -28,6 +28,8 @@ const CreateExerciseScreen = () => {
     const [descripcionError, setDescripcionError] = useState(false);
     const [ejercicioExistente, setEjercicioExistente] = useState(false);
 
+    const [ejercicioCreado, setejercicioCreado] = useState(false);
+
     const [plan, setPlan] = useState("");
 
     const getUserFromStorage = async () => {
@@ -58,10 +60,6 @@ const CreateExerciseScreen = () => {
 
     useEffect(() => {
         getUserFromStorage();
-        if (name !== "" && description !== "" && !ejercicioExistente) {
-            createExercise();
-        }
-
     }, [ejercicioExistente]);
 
     const comprobarEjercicio = async () => {
@@ -72,6 +70,7 @@ const CreateExerciseScreen = () => {
         const filtro = `${encodeURIComponent(finalQuery)}`;
         const url = `${baseUrl}/${filtro}`;
 
+        var existe = false;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -80,17 +79,23 @@ const CreateExerciseScreen = () => {
 
             if (checkExercise !== "[]") {
                 setEjercicioExistente(true);
+                existe = true;
             } else {
                 setEjercicioExistente(false);
+                existe = false;
+            }
+
+            if (name !== "" && description !== "" && !existe) {
+                createExercise();
             }
         } catch (error) {
             console.error(error);
         }
+
+
     };
 
     const createExercise = async () => {
-        const navigation = useNavigation();
-
         const baseUrl = 'http://192.168.1.102:3000/insertExercise/exercises';
         const filtro = `${name}/${description}/${deporte}/${dificultad}/${intensidad}/${personas}/${edad}/${objetivo}`;
         const url = `${baseUrl}/${filtro}`;
@@ -103,13 +108,15 @@ const CreateExerciseScreen = () => {
             console.log("Ejercicio:" + name + " no se ha podido insertar");
             console.error(error);
         }
+
+        setejercicioCreado(true);
     };
 
     return (
         <View style={styles.containerGrande}>
             <ScrollView >
                 <View style={styles.container}>
-                    <Text style={styles.tituloTexto}>CREAR EJERCICIO</Text>
+                    <Text style={styles.title}>CREAR EJERCICIO</Text>
                     <TextInput style={nameError || ejercicioExistente ? styles.inputError : styles.input}
                         placeholder="Nombre del Ejercicio"
                         value={name}
@@ -239,6 +246,22 @@ const CreateExerciseScreen = () => {
                     </View>
                 </View>
             )}
+
+            {ejercicioCreado && (
+                <View style={styles.overlayContainer}>
+                    <View style={styles.overlayContent}>
+                        <Text style={styles.overlayText}>
+                            ¡Ejercicio insertado correctamente!
+                        </Text>
+
+                        <View style={styles.botones}>
+                            <TouchableOpacity style={styles.buttonPopUP} onPress={() => navigation.navigate('SliderScreen')}>
+                                <Text style={styles.buttonTextPopUP}>VOLVER AL INICIO</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            )}
         </View>
     );
 };
@@ -252,6 +275,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
+        marginVertical: 10,
+        textShadowColor: '#FAC710'
     },
     tituloTexto: {
         marginVertical: 10,
@@ -316,7 +347,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000000',
     },
-    
+
     overlayContainer: {
         position: 'absolute',
         top: 0,
@@ -344,7 +375,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 20,
     },
-    
+
     botones: {
         width: '100%',
         marginTop: '2.5%',
@@ -352,8 +383,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-    buttonPopUP:{
-        width: '40%',
+    buttonPopUP: {
+        width: '90%',
         marginHorizontal: '5%',
         height: 50,
         backgroundColor: '#FAC710',
@@ -367,7 +398,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000000',
     },
-    
+
 });
 
 export default CreateExerciseScreen;

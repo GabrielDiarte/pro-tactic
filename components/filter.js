@@ -38,11 +38,7 @@ const FilterComponent = () => {
     return (
         
         <View style={styles.container}>
-            <TextInput style={styles.input}
-                value={dato}
-                onChangeText={setDato}
-                placeholder="Buscar Actividad"
-            />
+            <Text style={styles.title}>BUSCAR EJERCICIOS</Text>
             <View style={styles.pickerWrapper}>
                 <Text style={styles.pickerTitle}>Deporte</Text>
                 <View style={styles.pickerContainer}>
@@ -149,6 +145,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: 20,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
+        marginBottom: 10,
+        textShadowColor: '#FAC710'
     },
     pickerWrapper: {
         width: '100%',

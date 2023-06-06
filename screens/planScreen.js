@@ -12,6 +12,7 @@ const PlanScreen = () => {
   const [usuario, setUsuario] = useState({});
 
   const [planError, setPlanError] = useState(false);
+  const [plancambiado, setPlanCambiado] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +52,7 @@ const PlanScreen = () => {
 
   const cambiarPlan = async () => {
     await updatePlan();
+    setPlanCambiado(true);
   };
 
   const updatePlan = async () => {
@@ -116,6 +118,21 @@ const PlanScreen = () => {
           <Text style={styles.buttonText}>ELEGIR PLAN</Text>
         </TouchableOpacity>
       </View>
+      {plancambiado && (
+        <View style={styles.overlayContainer}>
+          <View style={styles.overlayContent}>
+            <Text style={styles.overlayText}>
+              ¡Plan cambiado correctamente! Gracias por confiar en nosotros 😊
+            </Text>
+
+            <View style={styles.botones}>
+              <TouchableOpacity style={styles.buttonPopUP} onPress={() => navigation.navigate('SliderScreen')}>
+                <Text style={styles.buttonTextPopUP}>VOLVER AL INICIO</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -180,6 +197,57 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+
+  overlayContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  overlayContent: {
+    backgroundColor: 'white',
+    width: '80%',
+    borderRadius: 8,
+    marginBottom: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  overlayText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: '5%',
+    marginBottom: '2.5%',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+
+  botones: {
+    width: '100%',
+    marginTop: '2.5%',
+    marginBottom: '5%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  buttonPopUP: {
+    width: '90%',
+    marginHorizontal: '5%',
+    height: 50,
+    backgroundColor: '#FAC710',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonTextPopUP: {
+    fontSize: 18,
+    paddingHorizontal: 2,
     fontWeight: 'bold',
     color: '#000000',
   },

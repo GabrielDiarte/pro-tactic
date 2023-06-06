@@ -17,6 +17,7 @@ function TrainingList() {
     useEffect(() => {
 
         const imprimirMensaje = async () => {
+            console.log(datos);
             const { deporte, dificultad, edad, intensidad, objetivo, personas } = datos;
             const deporteQuery = "deporte: " + '"' + deporte + '",';
             const dificultadQuery = "dificultad: " + '"' + dificultad + '",';
@@ -58,7 +59,7 @@ function TrainingList() {
                     const response = await axios.get(url);
                     // console.log(response.data);
                     setEntrenamientos(response.data);
-                    console.log(response.data)
+                    //console.log(response.data)
                 } catch (error) {
                     console.error(error);
                 }
@@ -142,16 +143,16 @@ const styles = StyleSheet.create({
     nombre: {
         width: '95%',
         marginLeft: '5%',
-        height: '20%',
+        height: '15%',
         textAlign: 'center',
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 17,
     },
     descripcion: {
         width: '95%',
         marginLeft: '5%',
-        height: '49%',
+        height: '55%',
         textAlign: 'auto',
         marginTop: '2%',
         color: 'white',

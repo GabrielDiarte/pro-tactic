@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 function ExerciseBigCard() {
+    const navigation = useNavigation();
     const route = useRoute();
     const { nombre } = route.params;
 
@@ -39,7 +41,7 @@ function ExerciseBigCard() {
     };
     const medio = {
         color: '#FAC710',
-        
+
         fontSize: 25,
     };
     const alto = {
@@ -66,7 +68,7 @@ function ExerciseBigCard() {
                                         <View style={styles.prueba}>
                                             <Text style={styles.prueba2}>Dificultad</Text>
                                         </View>
-                                       <Text style={entrenamiento.dificultad === 'Low' ? bajo : entrenamiento.dificultad === 'Medium' ? medio : alto}>{entrenamiento.dificultad}</Text>
+                                        <Text style={entrenamiento.dificultad === 'Low' ? bajo : entrenamiento.dificultad === 'Medium' ? medio : alto}>{entrenamiento.dificultad}</Text>
 
                                     </View>
                                     <View style={styles.caracteristicasContainerIndividual}>
@@ -97,9 +99,12 @@ function ExerciseBigCard() {
                         </View>
                     ))}
                 </ScrollView>
+                                <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                                    <Text style={styles.buttonText}>VOLVER</Text>
+                                </TouchableOpacity>
             </View>
         </View>
-    ); 
+    );
 }
 
 const styles = StyleSheet.create({
@@ -183,6 +188,23 @@ const styles = StyleSheet.create({
         width: '30%',
         marginHorizontal: '1.5%',
         marginBottom: '1.5%',
+    },
+    button: {
+        width: '100%',
+        height: 50,
+        position: 'relative',
+        bottom: 0,
+        marginTop: '3%',
+        backgroundColor: '#FAC710',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#000000',
     },
 });
 

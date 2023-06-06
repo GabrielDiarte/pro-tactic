@@ -1,18 +1,65 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput, SliderComponent } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import Swiper from 'react-native-swiper';
-
-import firebase from 'firebase/app';
-import 'firebase/database';
-
+import { useNavigation } from '@react-navigation/native';
 
 function SliderComponentScreen() {
-
-    const images = [
+    const navigation = useNavigation();
+    const imagesFutbol = [
         require('../fotos/futbol/posesion.jpg'),
-        require('../fotos/basket/balon.png'),
+        require('../fotos/futbol/centro.jpg'),
         require('../fotos/futbol/basculacion.jpg'),
     ];
+    const imagesBasket = [
+        require('../fotos/basket/22.jpg'),
+        require('../fotos/basket/balon.png'),
+        require('../fotos/basket/basketon.jpg'),
+    ];
+    const imagesMixtas = [
+        require('../fotos/futbol/circuit.jpg'),
+        require('../fotos/basket/corro.jpg'),
+        require('../fotos/futbol/combinacion.jpg'),
+    ];
+    const imagesCalentamientos = [
+        require('../fotos/basket/posesion.jpg'),
+        require('../fotos/futbol/cuadra.jpg'),
+        require('../fotos/basket/panuelo.jpg'),
+    ];
+
+    const [deporte, setDeporte] = useState("Cualquiera");
+    const [dificultad, setDificultad] = useState("Cualquiera");
+    const [intensidad, setIntensidad] = useState("Cualquiera");
+    const [personas, setPersonas] = useState("Cualquiera");
+    const [edad, setEdad] = useState("Cualquiera");
+    const [objetivo, setObjetivo] = useState("Cualquiera");
+
+
+    const [ejecucionInicial, setEjecucionInicial] = useState(true);
+
+    useEffect(() => {
+      if (ejecucionInicial) {
+        setEjecucionInicial(false);
+      } else {
+        buscar();
+      }
+    }, [deporte, dificultad, intensidad, personas, edad, objetivo]);
+    const buscar = () => {
+        const datos = {
+            deporte,
+            dificultad,
+            intensidad,
+            personas,
+            edad,
+            objetivo,
+        };
+        setDeporte("Cualquiera");
+        setDificultad("Cualquiera");
+        setIntensidad("Cualquiera");
+        setPersonas("Cualquiera");
+        setEdad("Cualquiera");
+        setObjetivo("Cualquiera");
+        navigation.navigate('TrainingListScreen', { datos });
+    };
 
     return (
         <View style={styles.contenedor}>
@@ -22,20 +69,21 @@ function SliderComponentScreen() {
                         <Text style={styles.tituloTexto}>TOP FUTBOL</Text>
                     </View>
                     <View style={styles.imagenCraousel}>
-                        <Swiper
-                            dotStyle={styles.dotStyle}
-                            activeDotStyle={styles.activeDotStyle}
-                            autoplay={true}
-                            autoplayTimeout={5}
-                            loop={true}>
-                            {images.map((image, index) => (
-                                <Image source={image} style={styles.foto} resizeMode="cover" />
-
-                            ))}
-                        </Swiper>
-                    </View>
-                    <View style={styles.textoAbajoContainer}>
-                        <Text style={styles.textoAbajoTexto}>Más ejercicios</Text>
+                        <TouchableOpacity onPress={() => {
+                            setDeporte("Futbol");
+                        }}>
+                            <Swiper
+                                dotStyle={styles.dotStyle}
+                                activeDotStyle={styles.activeDotStyle}
+                                autoplay={true}
+                                autoplayTimeout={5}
+                                loop={true}
+                            >
+                                {imagesFutbol.map((image, index) => (
+                                    <Image source={image} style={styles.foto} resizeMode="cover" key={index} />
+                                ))}
+                            </Swiper>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -44,48 +92,72 @@ function SliderComponentScreen() {
                         <Text style={styles.tituloTexto}>TOP BALONCESTO</Text>
                     </View>
                     <View style={styles.imagenCraousel}>
-                        <Swiper
-                            dotStyle={styles.dotStyle}
-                            activeDotStyle={styles.activeDotStyle}
-                            autoplay={true}
-                            autoplayTimeout={5}
-                            loop={true}>
-                            {images.map((image, index) => (
-                                <Image source={image} style={styles.foto} resizeMode="cover" />
-
-                            ))}
-                        </Swiper>
-                    </View>
-                    <View style={styles.textoAbajoContainer}>
-                        <Text style={styles.textoAbajoTexto}>Más ejercicios</Text>
+                    <TouchableOpacity onPress={() => {
+                            setDeporte("Basket");
+                        }}>
+                            <Swiper
+                                dotStyle={styles.dotStyle}
+                                activeDotStyle={styles.activeDotStyle}
+                                autoplay={true}
+                                autoplayTimeout={5}
+                                loop={true}
+                            >
+                                {imagesBasket.map((image, index) => (
+                                    <Image source={image} style={styles.foto} resizeMode="cover" key={index} />
+                                ))}
+                            </Swiper>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={styles.tarjetaSlider}>
                     <View style={styles.tituloContainer}>
-                        <Text style={styles.tituloTexto}>MAS RECIENTES</Text>
+                        <Text style={styles.tituloTexto}>LAS MÁS DIFICILES</Text>
                     </View>
                     <View style={styles.imagenCraousel}>
+                    <TouchableOpacity onPress={() => {
+                            setDificultad("Hard");
+                        }}>
                         <Swiper
                             dotStyle={styles.dotStyle}
                             activeDotStyle={styles.activeDotStyle}
                             autoplay={true}
                             autoplayTimeout={5}
-                            loop={true}>
-                            {images.map((image, index) => (
-                                <Image source={image} style={styles.foto} resizeMode="cover" />
-
+                            loop={true}
+                        >
+                            {imagesMixtas.map((image, index) => (
+                                <Image source={image} style={styles.foto} resizeMode="cover" key={index} />
                             ))}
                         </Swiper>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.textoAbajoContainer}>
-                        <Text style={styles.textoAbajoTexto}>Más ejercicios</Text>
+                </View>
+
+                <View style={styles.tarjetaSlider}>
+                    <View style={styles.tituloContainer}>
+                        <Text style={styles.tituloTexto}>PARA CALENTAR</Text>
+                    </View>
+                    <View style={styles.imagenCraousel}>
+                    <TouchableOpacity onPress={() => {
+                            setObjetivo("Calentamiento");
+                        }}>
+                        <Swiper
+                            dotStyle={styles.dotStyle}
+                            activeDotStyle={styles.activeDotStyle}
+                            autoplay={true}
+                            autoplayTimeout={5}
+                            loop={true}
+                        >
+                            {imagesCalentamientos.map((image, index) => (
+                                <Image source={image} style={styles.foto} resizeMode="cover" key={index} />
+                            ))}
+                        </Swiper>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
         </View>
     );
-
 }
 const styles = StyleSheet.create({
     containerGeneral: {
@@ -104,6 +176,7 @@ const styles = StyleSheet.create({
     tituloContainer: {
         marginBottom: 8,
         justifyContent: 'center',
+        alignItems: 'center'
     },
     tituloTexto: {
         fontSize: 30,
