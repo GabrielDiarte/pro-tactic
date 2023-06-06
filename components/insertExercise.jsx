@@ -32,14 +32,14 @@ const CreateExerciseScreen = () => {
 
     const getUserFromStorage = async () => {
         try {
-          const usuarioGuardadoString = await AsyncStorage.getItem('usuario');
-          const usuarioGuardado = JSON.parse(usuarioGuardadoString);
-          setPlan(usuarioGuardado[0].plan);
-          // Realiza las acciones necesarias con los datos del usuario
+            const usuarioGuardadoString = await AsyncStorage.getItem('usuario');
+            const usuarioGuardado = JSON.parse(usuarioGuardadoString);
+            setPlan(usuarioGuardado[0].plan);
+            // Realiza las acciones necesarias con los datos del usuario
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     const submit = async () => {
         if (name === "") {
@@ -76,7 +76,7 @@ const CreateExerciseScreen = () => {
             const response = await fetch(url);
             const data = await response.json();
             const checkExercise = JSON.stringify(data);
-            console.log('Respuesta:'+ checkExercise+":Respuesta");
+            console.log('Respuesta:' + checkExercise + ":Respuesta");
 
             if (checkExercise !== "[]") {
                 setEjercicioExistente(true);
@@ -89,6 +89,8 @@ const CreateExerciseScreen = () => {
     };
 
     const createExercise = async () => {
+        const navigation = useNavigation();
+
         const baseUrl = 'http://192.168.1.102:3000/insertExercise/exercises';
         const filtro = `${name}/${description}/${deporte}/${dificultad}/${intensidad}/${personas}/${edad}/${objetivo}`;
         const url = `${baseUrl}/${filtro}`;
@@ -105,248 +107,267 @@ const CreateExerciseScreen = () => {
 
     return (
         <View style={styles.containerGrande}>
-        <ScrollView >
-            <View style={styles.container}>
-                <Text style={styles.tituloTexto}>CREAR EJERCICIO</Text>
-                <TextInput style={nameError || ejercicioExistente ? styles.inputError : styles.input}
-                    placeholder="Nombre del Ejercicio"
-                    value={name}
-                    onChangeText={setName}
-                />
-                <View style={styles.containerError}>
-                    {nameError && (
-                        <Text style={styles.textoError}>Introduce un nombre válido</Text>
-                    )}
-                    {ejercicioExistente && (
-                        <Text style={styles.textoError}>Ejercicio existente en la base de datos</Text>
-                    )}
-                </View>
-                <TextInput style={descripcionError ? styles.inputError : styles.input}
-                    placeholder="Descripción del Ejercicio"
-                    value={description}
-                    onChangeText={setDescription}
-                />
-                <View style={styles.containerError}>
-                    {descripcionError && (
-                        <Text style={styles.textoError}>Introduce una descricpión válida</Text>
-                    )}
-                </View>
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Deporte</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={deporte}
-                            onValueChange={(value) => setDeporte(value)}
-                        >
-                            {opcionesCampo1.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+            <ScrollView >
+                <View style={styles.container}>
+                    <Text style={styles.tituloTexto}>CREAR EJERCICIO</Text>
+                    <TextInput style={nameError || ejercicioExistente ? styles.inputError : styles.input}
+                        placeholder="Nombre del Ejercicio"
+                        value={name}
+                        onChangeText={setName}
+                    />
+                    <View style={styles.containerError}>
+                        {nameError && (
+                            <Text style={styles.textoError}>Introduce un nombre válido</Text>
+                        )}
+                        {ejercicioExistente && (
+                            <Text style={styles.textoError}>Ejercicio existente en la base de datos</Text>
+                        )}
                     </View>
-                </View>
+                    <TextInput style={descripcionError ? styles.inputError : styles.input}
+                        placeholder="Descripción del Ejercicio"
+                        value={description}
+                        onChangeText={setDescription}
+                    />
+                    <View style={styles.containerError}>
+                        {descripcionError && (
+                            <Text style={styles.textoError}>Introduce una descricpión válida</Text>
+                        )}
+                    </View>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Deporte</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={deporte}
+                                onValueChange={(value) => setDeporte(value)}
+                            >
+                                {opcionesCampo1.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
+                    </View>
 
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Dificultad</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={dificultad}
-                            onValueChange={(value) => setDificultad(value)}
-                        >
-                            {opcionesCampo2.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Dificultad</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={dificultad}
+                                onValueChange={(value) => setDificultad(value)}
+                            >
+                                {opcionesCampo2.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Intensidad</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={intensidad}
-                            onValueChange={(value) => setIntensidad(value)}
-                        >
-                            {opcionesCampo3.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Intensidad</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={intensidad}
+                                onValueChange={(value) => setIntensidad(value)}
+                            >
+                                {opcionesCampo3.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Numero de personas</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={personas}
-                            onValueChange={(value) => setPersonas(value)}
-                        >
-                            {opcionesCampo4.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Numero de personas</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={personas}
+                                onValueChange={(value) => setPersonas(value)}
+                            >
+                                {opcionesCampo4.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Edad</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={edad}
-                            onValueChange={(value) => setEdad(value)}
-                        >
-                            {opcionesCampo5.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Edad</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={edad}
+                                onValueChange={(value) => setEdad(value)}
+                            >
+                                {opcionesCampo5.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.pickerWrapper}>
-                    <Text style={styles.pickerTitle}>Objetivos</Text>
-                    <View style={styles.pickerContainer}>
-                        <PickerRN
-                            selectedValue={objetivo}
-                            onValueChange={(value) => setObjetivo(value)}
-                        >
-                            {opcionesCampo6.map((opcion) => (
-                                <PickerRN.Item key={opcion} label={opcion} value={opcion} />
-                            ))}
-                        </PickerRN>
+                    <View style={styles.pickerWrapper}>
+                        <Text style={styles.pickerTitle}>Objetivos</Text>
+                        <View style={styles.pickerContainer}>
+                            <PickerRN
+                                selectedValue={objetivo}
+                                onValueChange={(value) => setObjetivo(value)}
+                            >
+                                {opcionesCampo6.map((opcion) => (
+                                    <PickerRN.Item key={opcion} label={opcion} value={opcion} />
+                                ))}
+                            </PickerRN>
+                        </View>
                     </View>
+                    <TouchableOpacity style={styles.button} onPress={submit}>
+                        <Text style={styles.buttonText}>Crear Ejercicio</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={submit}>
-                    <Text style={styles.buttonText}>Crear Ejercicio</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
-              {plan !== 'Pro' && (
+            </ScrollView>
+            {plan !== 'Pro' && (
                 <View style={styles.overlayContainer}>
-                  <Text style={styles.overlayText}>¡Este contenido solo está disponible para usuarios Pro!</Text>
+                    <View style={styles.overlayContent}>
+                        <Text style={styles.overlayText}>
+                            ¡Vaya, parece que esta opción solo está disponible para usuarios Pro!
+                        </Text>
+
+                        <View style={styles.botones}>
+                            <TouchableOpacity style={styles.buttonPopUP} onPress={() => navigation.navigate('PlanScreen')}>
+                                <Text style={styles.buttonTextPopUP}>ELEGIR PLAN</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonPopUP} onPress={() => navigation.goBack()}>
+                                <Text style={styles.buttonTextPopUP}>IR ATRÁS</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-              )}
-              </View>
+            )}
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     containerGrande: {
-      flex: 1,
+        flex: 1,
     },
     container: {
-      flex: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 20,
+        flex: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
     },
     tituloTexto: {
-      marginVertical: 10,
-      fontSize: 30,
-      fontWeight: 'bold'
+        marginVertical: 10,
+        fontSize: 30,
+        fontWeight: 'bold'
     },
     input: {
-      width: '100%',
-      height: 40,
-      borderWidth: 1,
-      borderColor: 'gray',
-      borderRadius: 5,
-      paddingHorizontal: 10,
+        width: '100%',
+        height: 40,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        paddingHorizontal: 10,
     },
     inputError: {
-      width: '100%',
-      height: 40,
-      borderWidth: 3,
-      borderColor: 'red',
-      backgroundColor: '#FFCCCC',
-      borderRadius: 5,
-      paddingHorizontal: 10,
+        width: '100%',
+        height: 40,
+        borderWidth: 3,
+        borderColor: 'red',
+        backgroundColor: '#FFCCCC',
+        borderRadius: 5,
+        paddingHorizontal: 10,
     },
     textoError: {
-      fontSize: 15,
-      color: 'red',
-      fontWeight: 'bold',
-      textAlign: 'left'
+        fontSize: 15,
+        color: 'red',
+        fontWeight: 'bold',
+        textAlign: 'left'
     },
     containerError: {
-      width: '100%',
-      height: 25,
-      justifyContent: 'center',
-      textAlign: 'left'
+        width: '100%',
+        height: 25,
+        justifyContent: 'center',
+        textAlign: 'left'
     },
     pickerWrapper: {
-      width: '100%',
-      marginBottom: 10,
+        width: '100%',
+        marginBottom: 10,
     },
     pickerTitle: {
-      marginBottom: 5,
+        marginBottom: 5,
     },
     pickerContainer: {
-      width: '100%',
-      height: 40,
-      borderWidth: 1,
-      borderColor: 'gray',
-      justifyContent: 'center',
-      borderRadius: 5,
-      paddingHorizontal: 10,
+        width: '100%',
+        height: 40,
+        borderWidth: 1,
+        borderColor: 'gray',
+        justifyContent: 'center',
+        borderRadius: 5,
+        paddingHorizontal: 10,
     },
     button: {
-      width: '100%',
-      height: 50,
-      backgroundColor: '#FAC710',
-      borderRadius: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
+        width: '100%',
+        height: 50,
+        backgroundColor: '#FAC710',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#000000',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#000000',
     },
-  
-    // Estilos de la pantalla de aviso
+    
     overlayContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
-      justifyContent: 'center',
-      alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    },
+    overlayContent: {
+        backgroundColor: 'white',
+        width: '80%',
+        borderRadius: 8,
+        marginBottom: '20%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
     overlayText: {
-      fontSize: 18,
-      color: 'white',
-      textAlign: 'center',
-      paddingHorizontal: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: '5%',
+        marginBottom: '2.5%',
+        textAlign: 'center',
+        paddingHorizontal: 20,
     },
-  
-    // Estilos del modal
-    modalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+    
+    botones: {
+        width: '100%',
+        marginTop: '2.5%',
+        marginBottom: '5%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
-    modalContent: {
-      backgroundColor: 'white',
-      padding: 20,
-      borderRadius: 8,
+    buttonPopUP:{
+        width: '40%',
+        marginHorizontal: '5%',
+        height: 50,
+        backgroundColor: '#FAC710',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    modalText: {
-      fontSize: 18,
-      marginBottom: 20,
-      textAlign: 'center',
+    buttonTextPopUP: {
+        fontSize: 18,
+        paddingHorizontal: 2,
+        fontWeight: 'bold',
+        color: '#000000',
     },
-    modalButton: {
-      backgroundColor: 'blue',
-      padding: 10,
-      borderRadius: 8,
-    },
-    modalButtonText: {
-      color: 'white',
-      fontSize: 16,
-      textAlign: 'center',
-    },
-  });
-  
-  export default CreateExerciseScreen;
+    
+});
+
+export default CreateExerciseScreen;

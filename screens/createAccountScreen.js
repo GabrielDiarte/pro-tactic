@@ -228,7 +228,9 @@ const CreateAccountScreen = () => {
 
       <Text style={stylesCreateAccount.subtitle}>
         ¿Ya tienes cuenta?{' '}
-        <Text style={stylesCreateAccount.subtitleYellow}>Inicia sesión</Text>
+        <Text style={stylesCreateAccount.subtitleYellow} onPress={() => {
+            navigation.navigate('LoginScreen');
+          }}>Inicia sesión</Text>
       </Text>
     </View>
   );
