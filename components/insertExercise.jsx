@@ -255,7 +255,7 @@ const CreateExerciseScreen = () => {
                         </Text>
 
                         <View style={styles.botones}>
-                            <TouchableOpacity style={styles.buttonPopUP} onPress={() => navigation.navigate('SliderScreen')}>
+                            <TouchableOpacity style={styles.buttonPopUPAceptar} onPress={() => navigation.navigate('SliderScreen')}>
                                 <Text style={styles.buttonTextPopUP}>VOLVER AL INICIO</Text>
                             </TouchableOpacity>
                         </View>
@@ -384,6 +384,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     buttonPopUP: {
+        width: '40%',
+        marginHorizontal: '5%',
+        height: 50,
+        backgroundColor: '#FAC710',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonPopUPAceptar: {
         width: '90%',
         marginHorizontal: '5%',
         height: 50,

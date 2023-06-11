@@ -29,11 +29,15 @@ const Stack = createStackNavigator();
 const CustomNavigationContainer = () => {
   const navigation = useNavigation();
   const [activeRouteName, setActiveRouteName] = useState('');
+  const [oldRouteName, setOldRouteName] = useState('');
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('state', () => {
       const currentRoute = navigation.getCurrentRoute();
+      if (oldRouteName != currentRoute) {
+        setIsMenuVisible(false);
+      }
       setActiveRouteName(currentRoute.name);
     });
     return unsubscribe;
