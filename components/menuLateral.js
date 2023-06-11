@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function MenuLateral() {
     const navigation = useNavigation();
+
+    const [deporteData, setDeporte] = useState('Cualquiera');
+    const [dificultad, setDificultad] = useState('Cualquiera');
+    const [intensidad, setIntensidad] = useState('Cualquiera');
+    const [personas, setPersonas] = useState('Cualquiera');
+    const [edad, setEdad] = useState('Cualquiera');
+    const [objetivo, setObjetivo] = useState('Cualquiera');
 
     const logout = async () => {
         try {
@@ -17,16 +24,29 @@ function MenuLateral() {
         }
       };
 
+      const buscar = (deporte) => {
+        const datos = {
+          deporte,
+          dificultad,
+          intensidad,
+          personas,
+          edad,
+          objetivo,
+        };
+        // Envía los datos a la pantalla de destino
+        console.log(datos);
+        navigation.navigate('TrainingListScreen', { datos });
+      };
 
     return (
         <View style={styles.contenedorMenuLateral}>
             <View style={styles.menuLateral}>
                 <Text style={styles.titulo}>Pro-Tactic</Text>
-                <TouchableOpacity style={styles.botonMenuLateral}>
-                    <Image source={require('../logos/futbol.png')} style={styles.imagenBotonMenuLateral} />
+                <TouchableOpacity style={styles.botonMenuLateral}  onPress={() => { buscar('Futbol')}}>
+                    <Image source={require('../logos/futbol.png')} style={styles.imagenBotonMenuLateral}/>
                     <Text style={styles.textoMenuLateral}>Futbol</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botonMenuLateral}>
+                <TouchableOpacity style={styles.botonMenuLateral} onPress={() => { buscar('Basket')}}>
                     <Image source={require('../logos/basket.png')} style={styles.imagenBotonMenuLateral} />
                     <Text style={styles.textoMenuLateral}>Baloncesto</Text>
                 </TouchableOpacity>

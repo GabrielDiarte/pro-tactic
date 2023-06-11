@@ -70,7 +70,7 @@ function TrainingList() {
         };
 
         imprimirMensaje();
-    }, []);
+    }, [datos]);
 
     return (
         <View style={styles.containerGeneral}>
