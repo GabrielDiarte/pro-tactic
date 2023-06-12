@@ -101,7 +101,7 @@ function UserList() {
                 <Text style={styles.title}>USUARIOS</Text>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {listaUsuarios.filter(usuario => usuario.mail != usuarioGuardado).map(usuario => (
-                        <View key={usuario.id} style={styles.infoConFoto}>
+                        <View style={styles.infoConFoto}>
                             <View style={styles.fotoContainer}>
                                 <Image source={require('../logos/usuario.png')} style={styles.foto} />
                             </View>

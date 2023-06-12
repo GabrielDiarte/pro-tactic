@@ -8,13 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginScreen = () => {
   const navigation = useNavigation();
 
-  const [usuario, setUsuario] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorLogin, setErrorLogin] = useState(false);
-
-
-
 
   const fetchData = async () => {
     const emailQuery = "mail: " + '"' + email + '",';
@@ -32,10 +28,9 @@ const LoginScreen = () => {
       const data = await response.json();
       console.log('Respuesta:', data);
       const updatedUsuario = data;
-      await AsyncStorage.setItem('usuario', JSON.stringify(data));
-      setUsuario(updatedUsuario);
       
       if (updatedUsuario && updatedUsuario.length > 0) {
+        await AsyncStorage.setItem('usuario', JSON.stringify(data));
         setErrorLogin(false);
         navigation.navigate('SliderScreen');
       } else {

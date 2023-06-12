@@ -218,9 +218,9 @@ const ProfileScreen = () => {
           <Text style={styles.infoUsuarioTextoCabecera}>Plan:</Text>
           <Text style={styles.infoUsuarioTexto}>{usuario.plan}</Text>
         </View>
-      </View>
 
-      <View style={styles.botones}>
+        
+      <View style={styles.botonesGeneral}>
         {!editarNombre && !editarApellidos && !editarEstado && !editarPass ? (
           <View style={styles.botones}>
 
@@ -243,6 +243,8 @@ const ProfileScreen = () => {
             </View>
           </View>
         )}
+      </View>
+
       </View>
 
     </View>
@@ -281,7 +283,7 @@ const styles = StyleSheet.create({
   infoUsuarioGeneral: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   infoUsuario: {
     flex: 0,
@@ -313,6 +315,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: '3%',
     padding: 5
+  },
+  botonesGeneral: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   botones: {
     width: '100%',

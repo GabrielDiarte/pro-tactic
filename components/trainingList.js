@@ -81,7 +81,7 @@ function TrainingList() {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {entrenamientos.map((entrenamiento) => (
                         <View style={styles.tarjeta}>
-                            <View key={entrenamiento.id} style={styles.infoConFoto}>
+                            <View style={styles.infoConFoto}>
                                 <Image source={{ uri: entrenamiento.img }} style={styles.foto} />
                                 <View style={styles.infoTarjeta}>
                                     <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
