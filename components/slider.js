@@ -33,32 +33,50 @@ function SliderComponentScreen() {
     const [edad, setEdad] = useState("Cualquiera");
     const [objetivo, setObjetivo] = useState("Cualquiera");
 
+    const datos = {
+        deporte,
+        dificultad,
+        intensidad,
+        personas,
+        edad,
+        objetivo,
+    };
 
-    const [ejecucionInicial, setEjecucionInicial] = useState(true);
-
-    useEffect(() => {
-      if (ejecucionInicial) {
-        setEjecucionInicial(false);
-      } else {
-        buscar();
-      }
-    }, [deporte, dificultad, intensidad, personas, edad, objetivo]);
     const buscar = () => {
-        const datos = {
-            deporte,
-            dificultad,
-            intensidad,
-            personas,
-            edad,
-            objetivo,
-        };
-        setDeporte("Cualquiera");
-        setDificultad("Cualquiera");
-        setIntensidad("Cualquiera");
-        setPersonas("Cualquiera");
-        setEdad("Cualquiera");
-        setObjetivo("Cualquiera");
         navigation.navigate('TrainingListScreen', { datos });
+    };
+    const buscarDeporte = (deporteData) => {
+        datos.deporte = deporteData;
+        datos.dificultad = "Cualquiera";
+        datos.intensidad = "Cualquiera";
+        datos.personas = "Cualquiera";
+        datos.edad = "Cualquiera";
+        datos.objetivo = "Cualquiera";
+        console.log(datos);
+        buscar();
+        
+    };
+
+    const buscarDificultad = (dificultadData) => {
+        datos.dificultad = dificultadData;
+        datos.deporte = "Cualquiera";
+        datos.intensidad = "Cualquiera";
+        datos.personas = "Cualquiera";
+        datos.edad = "Cualquiera";
+        datos.objetivo = "Cualquiera";
+        console.log(datos);
+        buscar();
+    };
+
+    const buscarObejtivo = (objetivoData) => {
+        datos.objetivo = objetivoData;
+        datos.dificultad = "Cualquiera",
+        datos.deporte = "Cualquiera";
+        datos.intensidad = "Cualquiera";
+        datos.personas = "Cualquiera";
+        datos.edad = "Cualquiera";
+        console.log(datos);
+        buscar();
     };
 
     return (
@@ -70,7 +88,7 @@ function SliderComponentScreen() {
                     </View>
                     <View style={styles.imagenCraousel}>
                         <TouchableOpacity onPress={() => {
-                            setDeporte("Futbol");
+                            buscarDeporte("Futbol");
                         }}>
                             <Swiper
                                 dotStyle={styles.dotStyle}
@@ -93,7 +111,7 @@ function SliderComponentScreen() {
                     </View>
                     <View style={styles.imagenCraousel}>
                     <TouchableOpacity onPress={() => {
-                            setDeporte("Basket");
+                            buscarDeporte("Basket");
                         }}>
                             <Swiper
                                 dotStyle={styles.dotStyle}
@@ -116,7 +134,7 @@ function SliderComponentScreen() {
                     </View>
                     <View style={styles.imagenCraousel}>
                     <TouchableOpacity onPress={() => {
-                            setDificultad("Hard");
+                            buscarDificultad("Hard");
                         }}>
                         <Swiper
                             dotStyle={styles.dotStyle}
@@ -139,7 +157,7 @@ function SliderComponentScreen() {
                     </View>
                     <View style={styles.imagenCraousel}>
                     <TouchableOpacity onPress={() => {
-                            setObjetivo("Calentamiento");
+                            buscarObejtivo("Calentamiento");
                         }}>
                         <Swiper
                             dotStyle={styles.dotStyle}

@@ -76,7 +76,6 @@ const LoginScreen = () => {
           <Text style={styles.textoError}>Email o contraseña incorrectos</Text>
         )}
       </View>
-      <Text style={styles.subtitle}>¿Olvidaste tu contraseña?</Text>
 
       <TouchableOpacity style={styles.button} onPress={submit}>
         <Text style={styles.buttonText}>Login</Text>

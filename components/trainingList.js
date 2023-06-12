@@ -17,7 +17,7 @@ function TrainingList() {
     useEffect(() => {
 
         const imprimirMensaje = async () => {
-            console.log(datos);
+            //console.log(datos);
             const { deporte, dificultad, edad, intensidad, objetivo, personas } = datos;
             const deporteQuery = "deporte: " + '"' + deporte + '",';
             const dificultadQuery = "dificultad: " + '"' + dificultad + '",';
@@ -45,14 +45,14 @@ function TrainingList() {
             if (personas != "Cualquiera") {
                 finalQuery += personasQuery;
             }
-            console.log(finalQuery);
+           // console.log(finalQuery);
 
 
             const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
             const filtro = `${finalQuery}`;
 
             const url = `${baseUrl}/${filtro}`;
-            console.log('URL generada:', url);
+           // console.log('URL generada:', url);
 
             const fetchData = async () => {
                 try {
@@ -61,7 +61,7 @@ function TrainingList() {
                     setEntrenamientos(response.data);
                     //console.log(response.data)
                 } catch (error) {
-                    console.error(error);
+                    //console.error(error);
                 }
             }
 
@@ -87,7 +87,7 @@ function TrainingList() {
                                     <Text style={styles.nombre}>{entrenamiento.nombre}</Text>
                                     <Text style={styles.descripcion}>{entrenamiento.descripcion}</Text>
                                     <TouchableOpacity style={styles.buttonVerMas}
-                                        onPress={() => { navigation.navigate('BigCardScreen', { nombre: entrenamiento.nombre }) }}>
+                                        onPress={() => { navigation.navigate('BigCardScreen', { nombre: entrenamiento.nombre, deporte: entrenamiento.deporte, }) }}>
                                         <Text style={styles.buttonVerMasText}>Ver más</Text>
                                     </TouchableOpacity>
                                 </View>

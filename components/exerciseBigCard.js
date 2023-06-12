@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 function ExerciseBigCard() {
     const navigation = useNavigation();
     const route = useRoute();
-    const { nombre } = route.params;
+    const { nombre, deporte } = route.params;
 
     const [entrenamientosIndividual, setEntrenamientosIndividual] = useState([]);
 
@@ -15,11 +15,13 @@ function ExerciseBigCard() {
     useEffect(() => {
         const fetchData = async () => {
             const nombreQuery = "nombre: " + '"' + nombre + '",';
+            const deporteQuery = "deporte: " + '"' + deporte + '",';
+            const finalQuery = nombreQuery + deporteQuery;
 
             const baseUrl = 'http://192.168.1.102:3000/exercises/exercises';
-            const filtro = `${encodeURIComponent(nombreQuery)}`;
+            const filtro = `${encodeURIComponent(finalQuery)}`;
 
-            const url = `${baseUrl}/${nombreQuery}`;
+            const url = `${baseUrl}/${filtro}`;
             console.log('URL generada parte 2:', url);
             try {
                 const response = await fetch(url);
